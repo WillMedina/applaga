@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <title>APPLAGA - Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{URL_THEME}/css/login.css?v={STATICVERSION}" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/x-icon" href="{URL_THEME}/img/favicon.ico">
+    </head>
+    <body>
+        <div class="contenedor_login">
+            <div class="logo">
+                <img src="{URL_THEME}/img/logo_login.png" style="width: 302px; height: 80px" alt="">
+            </div>
+            <form id="frmLogin" class="formulario" onsubmit="return false;">
+                <label>Usuario</label><br >
+                <input type="text" id="txtUsuario" name="txtUsuario" class="cajatexto"><br><br>
+                <label>Contrase&ntilde;a</label><br >
+                <input type="password" id="txtPass" name="txtPass" class="cajatexto"><br><br>
+                <button id="btnLogin" type="button" class="boton">Ingresar</button>
+            </form>
+        </div>
+        <footer>
+            <div class="pie"><small>© {YEAR} <a href="https://controlambiental.net" target="_blank">Control Ambiental S.A.</a> - 
+                    Todos los derechos reservados - Desarrollado por WM - 
+                    <a href="https://applaga.com/" target="_blank">Ventas y contacto de Applaga</a></small></div>
+            <script>
+                var http = "{URL}";
+            </script>
+            <script src="{URL}/v/funcjs/login.js?v={STATICVERSION}"></script> 
+        </footer>
+
+    </body>
+</html>

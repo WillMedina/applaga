@@ -1,0 +1,144 @@
+<div class="contenedor_panel">
+    <h1>Biblioteca de datos: productos</h1>
+    <p class="texto-bold"><a href="{URL}/panel/datos">Biblioteca de datos</a> &rtrif; Productos</p>
+    <form onsubmit="return false">
+        <button onclick="registrar_producto()"><i class="fas fa-plus-square"></i> Registrar nuevo producto</button>
+        <button onclick="cargar_productos()">Refrescar datos</button>
+        <button disabled="disabled">Inventario de productos</button>
+    </form>    
+    <div class="panel">
+        <table class="responsive espaciado tabla-blanca">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th class="solo-desktop">Nombre comercial</th>
+                    <th>Ingrediente activo</th>
+                    <th>Ficha t&eacute;cnica</th>
+                    <th class="solo-desktop">Descripci&oacute;n</th>
+                    <th><i class="fas fa-cogs"></i></th>
+                </tr>
+            </thead>
+            <tbody id="tbody_listado_productos"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal_borrar_producto" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2 style="color:red">Borrar producto</h2>
+        <div class="panel panel-alerta" style="color:black">
+            <i class="fas fa-exclamation-triangle"></i> Est&aacute; a punto de borrar al producto <b><span id="producto_a_borrar"></span></b>, <u>esta acci&oacute;n es IRREVERSIBLE</u>, 
+            y tenga en cuenta que recuperar la informaci&oacute;n de este producto requerir&aacute; 
+            ponerse en contacto con soporte t&eacute;cnico. &iquest;Est&aacute; seguro que desea borrar el producto?
+        </div>
+        <div>&nbsp;</div>
+        <form onsubmit="return false">
+            <input type="hidden" id="borrar_producto_id">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="borrar_producto_ok(this)" class="input-alerta">
+                            <i class="fas fa-trash-alt"></i> S&Iacute;, BORRRAR</button>&nbsp;
+                        <button onclick="cancelar_borrado_producto(this)">CANCELAR</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_registrar_producto" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Registrar nuevo producto</h2>
+        <form onsubmit="return false" class="panel panel-exito" style="color: var(--negro) !important">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre:<br>
+                        <input class="responsive" type="text" id="registrar_producto_nombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nombre comercial:<br>
+                        <input class="responsive" type="text" id="registrar_producto_nombrecomercial" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ingrediente activo:<br>
+                        <input class="responsive" type="text" id="registrar_producto_ingredienteactivo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripci&oacute;n:<br>
+                        <textarea class="responsive" id="registrar_producto_descripcion"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ficha t&eacute;cnica:<br>
+                        <textarea class="responsive" id="registrar_producto_fichatecnica"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="registrar_producto_ok(this)"><i class="fas fa-save"></i> Registrar producto</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_editar_producto" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Editar producto</h2>
+        <form onsubmit="return false" class="panel panel-exito" style="color: var(--negro) !important">
+            <input type="hidden" id="editar_producto_id">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre:<br>
+                        <input class="responsive" type="text" id="editar_producto_nombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nombre comercial:<br>
+                        <input class="responsive" type="text" id="editar_producto_nombrecomercial" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ingrediente activo:<br>
+                        <input class="responsive" type="text" id="editar_producto_ingredienteactivo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripci&oacute;n:<br>
+                        <textarea class="responsive" id="editar_producto_descripcion"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ficha t&eacute;cnica:<br>
+                        <textarea class="responsive" id="editar_producto_fichatecnica"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="editar_producto_ok(this)"><i class="fas fa-save"></i> Editar producto</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

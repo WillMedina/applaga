@@ -1,0 +1,93 @@
+<div class="contenedor_panel">
+    <h1>Documentos del servicio <br class="solo-movil">
+        <span class="texto-alerta-leve"><b><code>{N_CONSTANCIA}</code></b></span> [<code>{CODIGO_UNICO}</code>]</h1>
+    <button class="input-info" onclick="datos_servicio(this)">
+        <i class="fas fa-paste"></i> Regresar al servicio
+    </button> |
+
+    <button class="input-info" onclick="subir_documentos(this)">
+        <i class="fas fa-upload"></i> Subir documentos
+    </button>
+    
+    <button class="input-info" onclick="actualizar_documentos(this)">
+        <i class="fas fa-sync-alt"></i> Actualizar lista
+    </button>
+
+    <div class="clearfix">&nbsp;</div>
+    <div id="documentos_servicio_contenido" style="color:var(--negro) !important"></div>
+</div>
+
+<div id="modal_borrar_documento" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Borrado del documento</h2>
+        <form onsubmit="return false" id="formulario_borrar_documento">
+            <input type="hidden" id="codigo_unico_borrar_documento">
+            <div class="panel panel-alerta" style="color: var(--negro) !important">
+                Est&aacute; a punto de borrar el documento <b><span id="nombre_borrar_documento"></span></b> del servicio. 
+                Tenga en cuenta que <b>esta acci&oacute;n es irreversible</b>.<br><br>&iquest;Desea proceder con el borrado?
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div style="text-align: center">
+                <button class="input-alerta" onclick="doc_borrar_ok(this)">Borrar definitivamente</button>
+                <button onclick="cancelar_subir_archivos(this, 'modal_borrar_documento')">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal_subida_documentos" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Subir documentos</h2>
+        <form onsubmit="return false;" id="formulario_subida_documento" enctype="multipart/form-data">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        <label for="txtNombreArchivo">Nombre</label><br>
+                        <input type="text" id="txtNombreArchivo" class="responsive">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cboReemplazar">Reemplazar</label><br>
+                        <select id="cboReemplazar" class="responsive"><option value="0">No reemplazar ning&uacute;n documento</option></select><br>
+                        <small>El archivo elegido pasar&aacute; a desactivarse</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtDescripcion">Descripci&oacute;n</label><br>
+                        <textarea placeholder="opcional" id="txtDescripcion" class="responsive"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="archivo">Archivo</label><br>
+                        <input type="file" 
+                               id="archivo" 
+                               class="responsive" 
+                               accept=".doc, .docx, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .pdf, application/pdf, .ppt, .pptx, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation">
+                        <small>Tipos permitidos: DOC, DOCX, XLS, XLSX, PPT, PPTX, RAR, ZIP</small>
+                    </td>
+                </tr>
+                <tr id="tr_carga" style="display:none">
+                    <td class="td_center">
+                        <progress id="subida_carga_bar" max="100" value="0"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_center">
+                        <button onclick="subir_documento_ok(this)">Subir</button>
+                        <button onclick="cancelar_subir_archivos(this, 'modal_subida_documentos')">Cancelar</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script>
+    var visita_id_static = {VISITA_ID};
+    var visita_codigo_unico = '{CODIGO_UNICO}';
+</script>

@@ -1,0 +1,84 @@
+/*** =============== CENTURY GOTHIC ====================== **/
+@font-face {
+    font-family: Century_Gothic;
+    src: url('../fonts/centurygothic/SansSerifFLF-Demibold.otf');
+    font-display: swap;
+}
+
+
+/** ============ OPEN SANS ================ **/
+
+@font-face {
+    font-family: 'Open-Sans';
+    src: url('../fonts/open_sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype-variations');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Open-Sans Italic';
+    src: url('../fonts/open_sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype-variations');
+    font-display: swap;
+}
+
+/** ============ LATO ================ **/
+
+@font-face{
+    font-family: 'Lato';
+    src: url('../fonts/lato/Lato-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Lato';
+    src: url('../fonts/lato/Lato-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Lato';
+    src: url('../fonts/lato/Lato-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Lato';
+    src: url('../fonts/lato/Lato-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/** ============ ROBOTO ================ **/
+
+@font-face{
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face{
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face{
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

@@ -1,0 +1,168 @@
+/* ====================COMPONENTES ================== */
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="tel"],
+input[type="search"],
+input[type="url"],
+input[type="week"],
+input[type="time"],
+input[type="date"]
+{
+    padding: 4px 10px 4px 10px;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    margin: 4px;
+}
+
+input:focus, textarea:focus, select:focus{
+    box-shadow: 0px 0px 4px var(--negro1);
+}
+
+textarea{
+    padding: 2px 10px 2px 10px;
+    font-family: "Roboto", sans-serif;
+    margin: 4px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-size: 14px;
+    min-width: 300px;
+}
+
+textarea.fijo{
+    resize: none !important;
+}
+
+textarea.responsive{
+    width: 99.9%; /* ajuste responsivo */
+    box-sizing: border-box; /* incluir el padding y borde en el ancho del elemento */
+}
+
+input[type="password"]{
+    -webkit-text-security: square; /* Para navegadores webkit (Safari, Chrome, etc.) */
+}
+
+/* quitando el focus de navegador (la linea de borde que crea el navegador)*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+input[type="radio"], input[type="checkbox"]{
+
+}
+
+button, input[type="button"]{
+    border: 1px solid var(--negro1);
+    padding: 5px 10px 5px 10px;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 4px;
+    text-transform: uppercase;
+    border-radius: 7px;
+    box-shadow: 1px 1px var(--negro1);
+}
+
+button:hover, input[type="button"]:hover, button:focus, input[type="button"]:focus{
+    box-shadow: 1px 1px var(--negro1);
+}
+
+button:active, input[type="button"]:active{
+    transform: translateX(1px) translateY(1px);
+    box-shadow: 0px 0px var(--negro1);
+}
+
+select{
+    padding: 5px 10px 5px 10px;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px;
+    /* font-weight: bold; */
+    margin: 4px;
+    border-radius: 7px;
+    border: 1px solid var(--negro1);
+    box-shadow: 1px 1px var(--negro1);
+}
+
+.texto-bold{
+    font-weight: bold !important;
+}
+
+/*=============== colores ================*/
+
+.text-negro{
+    color: var(--negro) !important;
+}
+
+.texto-alerta-fuerte{
+    color: var(--alerta-fuerte);
+}
+
+.texto-alerta-leve{
+    color: var(--alerta-leve);
+}
+
+.texto-advertencia-fuerte{
+    color: var(--advertencia-fuerte);
+}
+
+.texto-advertencia-leve{
+    color: var(--advertencia-leve);
+}
+
+.texto-info-fuerte{
+    color: var(--info-fuerte);
+}
+
+.texto-info-leve{
+    color:var(--info-leve);
+}
+
+.texto-exito-fuerte{
+    color:var(--exito-fuerte);
+}
+
+.texto-exito-leve{
+    color:var(--exito-leve);
+}
+
+.alerta-fuerte{
+    background-color: var(--alerta-fuerte);
+}
+
+.alerta-leve{
+    background-color: var(--alerta-leve);
+}
+
+.advertencia-fuerte{
+    background-color: var(--advertencia-fuerte);
+}
+
+.advertencia-leve{
+    background-color: var(--advertencia-leve);
+}
+
+.info-fuerte{
+    background-color: var(--info-fuerte);
+}
+
+.info-leve{
+    background-color:var(--info-leve);
+}
+
+.exito-fuerte{
+    background-color:var(--exito-fuerte);
+}
+
+.exito-leve{
+    background-color:var(--exito-leve);
+}

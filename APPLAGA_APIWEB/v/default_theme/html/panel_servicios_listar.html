@@ -1,0 +1,68 @@
+<div class="contenedor_panel">
+    <h1>Lista de servicios</h1>
+    <div>
+        <form id="registrar" onsubmit="return false">
+            <button onclick="window.location.href = '{URL}/panel/servicio/nuevo'">
+                <i class="fas fa-plus-square"></i> Registrar nuevo servicio
+            </button> |
+            <button id="search_constancia" class="input-info" onclick="busqueda_por_constancia()">
+                <i class="fas fa-search"></i> B&uacute;squeda por N° de constancia
+            </button>
+            <button id="search_rango" class="input-info" onclick="busqueda_por_rango()" style="display:none">
+                <i class="fas fa-search"></i> B&uacute;squeda por rango de fechas
+            </button>
+        </form>
+    </div>
+    <div class="panel panel-exito">
+        <form id="busquedas" onsubmit="return false;">
+            <div id="busquedas_rangos">
+                <table class="responsive noborder">
+                    <tr>
+                        <td>
+                            Cliente y local:<br>
+                            <select class="responsive" id="cboClientes" onchange="llenarLocales()">
+                                <option value="0">Todos los clientes...</option>
+                            </select><br>
+                            <select class="responsive" id="cboLocal">
+                                <option value="0">Todos los locales...</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Rango de fechas:<br>
+                            <input id="fecha1" type="date" class="responsive"><br>
+                            <input id="fecha2" type="date" class="responsive">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="responsive input-exito" id="btnListarVisitas" onclick="listarVisitas()">
+                                <i class="fas fa-search"></i> BUSCAR
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="busquedas_nconstancia" style="display:none">
+                <table class="responsive noborder">
+                    <tr>
+                        <td>
+                            N° de constancia:<br>
+                            <input id="termino_busqueda_constancia" type="text" class="responsive" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="responsive input-exito" id="btnListarVisitasConstancia" onclick="listarVisitasConstancia()">
+                                <i class="fas fa-search"></i> BUSCAR
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div id="resultado_lista"></div>
+</div>

@@ -1,0 +1,2 @@
+[2023-09-27 11:09:10][ERROR][c/servicio.php:api_listarvisitas][/servicio/api_listarvisitas] > Intento de acceso con parametros incorrectos en /servicio/api_listarvisitas
+[2023-09-27 11:14:08][ERROR][c/panel.php:security][/panel/servicio_pc/534930f6e2681daaf4d4eaf42df605a0] > #20230927.111408 : fallo en panel:security con tipo de usuario: 1 queriendo acceder desde [/panel/servicio_pc/534930f6e2681daaf4d4eaf42df605a0] - No existe sesion o ha acabado.

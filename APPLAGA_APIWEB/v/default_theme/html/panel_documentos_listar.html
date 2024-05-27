@@ -1,0 +1,131 @@
+<div class="contenedor_panel">
+    <h1>B&uacute;squeda de documentos</h1>
+    <form onsubmit="return false">
+        <div class="panel panel-exito">
+            <table class="noborder responsive espaciado">
+                <tr>
+                    <td style="width:70%">
+                        Buscar por n&uacute;mero de constancia ejecutada:<br>
+                        <input class="responsive" type="text" id="txtNConstancia"><br>
+                        Buscar por c&oacute;digo &uacute;nico de servicio:<br>
+                        <input class="responsive" type="text" id="txtCodigoUnico">
+                    </td >
+                    <td style="width:30%; text-align:center">
+                        <button onclick="listarDocumentos()"><i class="fas fa-search"></i> Buscar</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div class="clearfix">&nbsp;</div>
+    <div id="resultado_lista"></div>
+</div>
+
+<div id="modal_subir_documento" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Subir documento</h2>
+        <small>Tipos de archivo permitidos: DOC, DOCX, PDF, XLS, XLSX, PPT, PPTX</small>
+        <form onsubmit="return false">
+            <table class="noborder responsive tabla-blanca tabla-sombra">
+                <tr>
+                    <td style="width:35%">
+                        <select class="responsive">
+                            <option value="1">N&uacute;mero de constancia</option>
+                            <option value="1">C&oacute;digo &uacute;nico de servicio</option>
+                        </select>
+                    </td>
+                    <td style="width:65">
+                        <input type="text" class="responsive">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="td_center">
+                        <input type="file" class="responsive" accept=".doc,.docx,.pdf,.xls,.xlsx,.ppt,.pptx">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" class="responsive"></td>
+                </tr>
+                <tr>
+                    <td>Autor</td>
+                    <td><input type="text" class="responsive"></td>
+                </tr>
+                <tr>
+                    <td>Reemplaza a<br><small>Dejar en blanco si no reemplaza</small></td>
+                    <td><input type="text" class="responsive"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Descripci&oacute;n<br><textarea class="responsive"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Publicar a cliente inmediatamente</td>
+                    <td>
+                        <select class="responsive">
+                            <option value="0">NO</option>
+                            <option value="1">SI</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" class="td_center">
+                        <button class="input-exito"><i class="fas fa-upload"></i> Confirmar</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_ver_datos_documento" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Documento <br class="solo-movil"><code id="modal_codigo_unico"></code></h2>
+        <form onsubmit="return false">
+            <table class="noborder responsive">
+                <tr>
+                    <td style="width:33%">
+                        <button class="input-info responsive"><i class="fas fa-file-download"></i> Descarga</button>
+                    </td>
+                    <td style="width:33%">
+                        <button class="input-exito responsive"><i class="fas fa-vote-yea"></i> Publicaci&oacute;n</button>
+                    </td>
+                    <td style="width:33%">
+                        <button class="input-alerta responsive"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                    </td>
+                </tr>
+            </table>
+            <div>&nbsp;</div>
+            <table class="responsive noborder tabla-sombra tabla-blanca">
+                <tr>
+                    <td style="width:50%"><b>Nombre</b><br><span id="nombre_documento"></span></td>
+                    <td style="width:50%"><b>Autor</b><br><span id="autor_documento"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>Descripci&oacute;n</b><br><span id="descripcion_documento"></span></td>
+                </tr>
+                <tr>
+                    <td><b>Archivo</b><br><span id="ruta_documento"></span></td>
+                    <td><b>Extensi&oacute;n</b><br><span id="extension_documento"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>C&oacute;digo &uacute;nico</b><br><span id="codigo_unico_documento"></span></td>
+                </tr>
+                <tr>
+                    <td><b>Cliente</b><br><span id="cliente_documento"></span></td>
+                    <td><b>Direcci&oacute;n local</b><br><span id="direccion_documento"></span></td>
+                </tr>
+                <tr>
+                    <td><b>Reemplaza a</b><br><span id="reemplaza_documento"></span></td>
+                    <td><b>Fecha de creaci&oacute;n</b><br><span id="creacion_documento"></span></td>
+                </tr>
+                <tr>
+                    <td><b>Publicado</b><br><span id="publicado_documento"></span></td>
+                    <td><b>Visto (recibido por el cliente)</b><br><span id="recibido_documento"></span></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

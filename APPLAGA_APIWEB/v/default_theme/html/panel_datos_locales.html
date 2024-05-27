@@ -1,0 +1,145 @@
+<div class="contenedor_panel">
+    <h1>Biblioteca de datos: locales</h1>
+    <p class="texto-bold"><a href="{URL}/panel/datos">Biblioteca de datos</a> &rtrif; Clientes</p>
+    <div class="panel panel-info">
+        <form onsubmit="return false">
+            <select id="lista_clientes" class="responsive" onchange="cargar_locales()">
+                <option value="0">Seleccione un cliente</option>
+            </select>
+        </form>
+    </div>
+    <div>&nbsp;</div>
+    <div id="resultados" class="panel"></div>
+</div>
+
+<div id="modal_borrar_local" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2 style="color:red">Borrar local</h2>
+        <div class="panel panel-alerta" style="color:black">
+            <i class="fas fa-exclamation-triangle"></i> Est&aacute; a punto de borrar al local <b><span id="local_a_borrar"></span></b>, <u>esta acci&oacute;n es IRREVERSIBLE</u>, 
+            y tenga en cuenta que recuperar la informaci&oacute;n de este local requerir&aacute; 
+            ponerse en contacto con soporte t&eacute;cnico. &iquest;Est&aacute; seguro que desea borrar el local?
+        </div>
+        <div>&nbsp;</div>
+        <form onsubmit="return false">
+            <input type="hidden" id="borrar_local_localid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="borrar_local_ok(this)" class="input-alerta">
+                            <i class="fas fa-trash-alt"></i> S&Iacute;, BORRRAR</button>&nbsp;
+                        <button onclick="cancelar_borrado_local(this)">CANCELAR</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_editar_local" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Editar local</h2>
+        <form onsubmit="return false">
+            <input type="hidden" id="editar_local_localid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre clave:<br>
+                        <input class="responsive" type="text" id="editar_local_nombreclave"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Direcci&oacute;n:<br>
+                        <input class="responsive" type="text" id="editar_local_direccion"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tel&eacute;fono:<br>
+                        <input class="responsive" type="tel" id="editar_local_telefono"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email:<br>
+                        <input class="responsive" type="email" id="editar_local_email"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Frecuencia de servicio:<br>
+                        <select class="responsive" id="editar_local_frecuencia">
+                            <option value="SEMANAL">SEMANAL</option>
+                            <option value="QUINCENAL">QUINCENALMENTE</option>
+                            <option value="MENSUAL">MENSUAL</option>
+                            <option value="TRIMESTRAL">TRIMESTRAL</option>
+                            <option value="SEMESTRAL">SEMESTRAL</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="editar_local_ok(this)"><i class="fas fa-save"></i> Editar local</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_registrar_local" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Registrar nuevo local</h2>
+        <form onsubmit="return false">
+            <input type="hidden" id="registrar_local_clienteid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre clave:<br>
+                        <input class="responsive" type="text" id="registrar_local_nombreclave"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Direcci&oacute;n:<br>
+                        <input class="responsive" type="text" id="registrar_local_direccion"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tel&eacute;fono:<br>
+                        <input class="responsive" type="tel" id="registrar_local_telefono"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email:<br>
+                        <input class="responsive" type="email" id="registrar_local_email"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Frecuencia de servicio:<br>
+                        <select class="responsive" id="registrar_local_frecuencia">
+                            <option value="SEMANAL">SEMANAL</option>
+                            <option value="QUINCENAL">QUINCENALMENTE</option>
+                            <option value="MENSUAL">MENSUAL</option>
+                            <option value="TRIMESTRAL">TRIMESTRAL</option>
+                            <option value="SEMESTRAL">SEMESTRAL</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="registrar_local_ok(this)"><i class="fas fa-save"></i> Registrar local</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+

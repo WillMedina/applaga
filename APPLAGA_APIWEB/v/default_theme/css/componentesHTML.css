@@ -1,0 +1,182 @@
+.panel{
+    padding: 20px;
+    border: 2px solid;
+    border-radius: 10px;
+
+    border-color: var(--negro1);
+    background-color: var(--gris-claro2);
+    color: var(--negro1);
+    box-sizing: border-box !important;
+    /* box-shadow: 0px 0px 2px var(--negro1); */
+}
+
+.panel > * {
+    width: 100%; /* O ajusta el ancho según tus necesidades */
+    max-width: 100%;
+}
+
+.panel-alerta{
+    border-color: var(--alerta-fuerte) !important;
+    background-color: var(--alerta-leve) !important;
+    color: var(--alerta-fuerte) !important;
+}
+.panel-advertencia{
+    border-color: var(--advertencia-fuerte) !important;
+    background-color: var(--advertencia-leve) !important;
+    color: var(--negro1) !important;
+}
+
+.panel-info{
+    border-color: var(--info-fuerte) !important;
+    background-color: var(--info-leve) !important;
+    color: var(--info-fuerte) !important;
+}
+
+.panel-exito{
+    border-color: var(--exito-fuerte) !important;
+    background-color: var(--exito-leve) !important;
+    color: var(--exito-fuerte) !important;
+}
+
+.btn-alerta, .btn-alerta:active, .btn-alerta:hover, .btn-alerta:focus{
+    background-color: var(--alerta-fuerte);
+    color: var(--blanco);
+}
+
+.btn-advertencia, .btn-advertencia:active, .btn-advertencia:hover, .btn-advertencia:focus{
+    background-color: var(--advertencia-fuerte);
+    color: var(--negro1);
+}
+
+.btn-info, .btn-info:active, .btn-info:hover, .btn-info:focus{
+    background-color: var(--info-leve);
+    color: var(--negro1);
+}
+
+.btn-exito, .btn-exito:active, .btn-exito:hover, .btn-exito:focus{
+    background-color: var(--exito-fuerte);
+    color: var(--blanco);
+}
+
+.responsive{
+    width: 99.9%;
+    box-sizing: border-box;
+}
+.input-info, .input-advertencia, .input-exito, .input-alerta{
+    background-color: var(--gris-claro1) !important;
+}
+
+.input-info{
+    border-color: var(--info-fuerte) !important;
+    color: var(--info-fuerte) !important;
+}
+
+.input-info:focus{
+    box-shadow: 0px 0px 4px var(--info-fuerte) !important;
+}
+
+.input-alerta{
+    border-color: var(--alerta-fuerte) !important;
+    color: var(--alerta-fuerte) !important;
+}
+
+.input-alerta:focus{
+    box-shadow: 0px 0px 4px var(--alerta-fuerte) !important;
+}
+
+.input-advertencia{
+    border-color: var(--advertencia-fuerte) !important;
+    color: var(--advertencia-fuerte) !important;
+}
+
+.input-advertencia:focus{
+    box-shadow: 0px 0px 4px var(--advertencia-fuerte) !important;
+}
+
+.input-exito{
+    border-color: var(--exito-fuerte) !important;
+    color: var(--exito-fuerte) !important;
+}
+
+.input-exito:focus{
+    box-shadow: 0px 0px 4px var(--exito-fuerte) !important;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.card {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-link{
+    cursor:pointer;
+}
+
+a .card-link, a:hover .card-link ,  a:active .card-link{
+    color: var(--negro1);
+    text-decoration: none;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-text {
+    margin-bottom: 10px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.galeria-item {
+    width: 33.33%; /* Para mostrar 3 fotos por fila en pantallas grandes */
+    max-width: 33.33%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.galeria-item img {
+    width: 100%;
+    display: block;
+}
+
+.galeria-descripcion {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* CELULAR DE 600PX */
+@media only screen and (max-width: 600px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .galeria-item {
+        width: 100%; /* Mostrar una foto por fila en dispositivos móviles */
+    }
+}

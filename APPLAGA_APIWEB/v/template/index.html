@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../default_theme/css/main.css">
+        <style>
+            td{
+                /* padding: 20px; */
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <!-- <img src="https://loremflickr.com/300/300/paris,girl/all" /> -->
+            <p class="panel">
+                Estamos buscando un(a) gerente de marketing altamente motivado(a) para unirse a <br />
+                nuestro equipo en una empresa en rápido crecimiento.
+            </p>
+            <p class="panel panel-exito">
+                Estamos buscando un(a) gerente de marketing altamente motivado(a) para unirse a <br />
+                nuestro equipo en una empresa en rápido crecimiento. <!-- El candidato ideal será <br />
+                responsable de desarrollar y ejecutar estrategias de marketing efectivas <br />
+                para impulsar el crecimiento y la expansión de la empresa. También será responsable <br />
+                de liderar un equipo de marketing y trabajar en estrecha colaboración con otros <br />
+                departamentos para asegurar la coherencia de la marca y la efectividad del mensaje. <br />
+                El candidato ideal tendrá una sólida experiencia en marketing y liderazgo de equipos, <br />
+                junto con habilidades demostradas en la planificación y ejecución de campañas de <br />
+                marketing exitosas. -->
+            </p>
+            <p class="panel panel-advertencia">
+                Estamos buscando un(a) gerente de marketing altamente motivado(a) para unirse a <br />
+                nuestro equipo en una empresa en rápido crecimiento.
+            </p>
+
+            <p class="panel panel-info">
+                Estamos buscando un(a) gerente de marketing altamente motivado(a) para unirse a <br />
+                nuestro equipo en una empresa en rápido crecimiento.
+            </p>
+
+            <p class="panel panel-alerta">
+                Estamos buscando un(a) gerente de marketing altamente motivado(a) para unirse a <br />
+                nuestro equipo en una empresa en rápido crecimiento.
+            </p>
+            <br />
+            <table style='width:100%; text-align:center'>
+                <tr>
+                    <th>Leves</th>
+                    <th>Fuertes</th>
+                </tr>
+                <tr>
+                    <td style="background-color: var(--alerta-leve)">ERROR LEVE</td>
+                    <td style="background-color: var(--alerta-fuerte)">ERROR FUERTE</td>
+                </tr>
+                <tr>
+                    <td style="background-color: var(--advertencia-leve)">ADVERTENCIA LEVE</td>
+                    <td style="background-color: var(--advertencia-fuerte)">ADVERTENCIA FUERTE</td>
+                </tr>
+                <tr>
+                    <td style="background-color: var(--info-leve)">INFO LEVE</td>
+                    <td style="background-color: var(--info-fuerte)">INFO FUERTE</td>
+                </tr>
+                <tr>
+                    <td style="background-color: var(--exito-leve)">EXITO LEVE</td>
+                    <td style="background-color: var(--exito-fuerte)">EXITO FUERTE</td>
+                </tr>
+            </table>
+
+            <br />
+
+            <form onsubmit="return false">
+                <input type="text" /><br />
+                <input type="text" class="input-info"/><br />
+                <input type="text" class="input-alerta"/><br />
+                <input type="text" class="input-advertencia"/><br />
+                <input type="text" class="input-exito"/><br />
+                <input type="range" id="customRange1"><br />
+                <input type="email" class=""/><br />
+                <input type="datetime-local" class=""/><br />
+                <input type="number"/><br />
+                <input type="month"/><br />
+                <input type="url"/><br />
+                <input type="week"/><br />
+                <input type="time"/><br />
+                <input type="date"/><br />
+                <input type="radio" value="1" name="rd1"/>Radio 1<br />
+                <input type="radio" value="2" name="rd1"/>Radio 1<br />
+                <input type="checkbox" value="3" name="chk"/>Check box<br />
+                <input type="password" /><br />
+                <input type="button" value="Test button"/><br />
+                <select>
+                    <option>Test1</option>
+                    <option>Test2</option>
+                    <option>Test3</option>
+                </select><br />
+                <textarea class="fijo responsive input-alerta" rows="10" cols="10" >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium faucibus nunc a porta. Suspendisse consectetur massa suscipit nibh fringilla, a elementum ante lobortis. Donec nec efficitur risus, a mollis dolor. Aliquam euismod aliquam feugiat. Aenean tortor velit, lacinia sit amet enim vel, semper tincidunt ipsum. Fusce vitae vulputate nulla. Donec sed finibus massa. Proin dapibus convallis hendrerit. Sed posuere nulla at ante commodo, ac aliquet est iaculis. Pellentesque consequat libero nulla, in hendrerit ipsum interdum vulputate. Maecenas venenatis pretium sollicitudin. Donec mattis mauris ex, sed ullamcorper tellus tristique at. Donec magna diam, bibendum vel cursus vel, mattis vitae metus. Pellentesque tristique nec enim non lobortis. 
+                </textarea><br />
+                <button type="button" class="btn-exito">Enviar</button>
+                <button type="button" class="btn-alerta">Error</button>
+                <button type="button" class="btn-info">Info</button>
+                <button type="button" class="btn-advertencia">Warning</button>
+            </form>
+
+        </div>
+
+    </body>
+</html>
