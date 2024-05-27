@@ -3,11 +3,11 @@ package com.dapm.applaga
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var progressIndicator: LinearProgressIndicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,18 +25,27 @@ class MainActivity : AppCompatActivity() {
 
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
+        progressIndicator = findViewById(R.id.progressIndicator)
     }
 
     fun login(view: View) {
         val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()
 
+        if (username.isBlank() || password.isBlank()) {
+            Snackbar.make(view, "Por favor, complete todos los campos", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+
+        progressIndicator.visibility = View.VISIBLE
+
         val client = OkHttpClient()
 
         // Crear JSON para la solicitud
-        val jsonObject = JSONObject()
-        jsonObject.put("usuario", username)
-        jsonObject.put("pass", password)
+        val jsonObject = JSONObject().apply {
+            put("usuario", username)
+            put("pass", password)
+        }
 
         val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
         val requestBody = RequestBody.create(mediaType, jsonObject.toString())
@@ -49,14 +59,18 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
                 runOnUiThread {
-                    Toast.makeText(this@MainActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                    progressIndicator.visibility = View.GONE
+                    Snackbar.make(view, "Error de conexión", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
+                runOnUiThread {
+                    progressIndicator.visibility = View.GONE
+                }
                 if (!response.isSuccessful) {
                     runOnUiThread {
-                        Toast.makeText(this@MainActivity, "Error en la solicitud", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(view, "Error en la solicitud", Snackbar.LENGTH_SHORT).show()
                     }
                     return
                 }
@@ -65,10 +79,10 @@ class MainActivity : AppCompatActivity() {
                 val jsonResponse = JSONObject(responseData)
                 val resultado = jsonResponse.optInt("resultado")
 
-                if (resultado == 1) {
-                    val mensaje = jsonResponse.getString("mensaje")
-                    runOnUiThread {
-                        Toast.makeText(this@MainActivity, "Login exitoso: $mensaje", Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    if (resultado == 1) {
+                        val mensaje = jsonResponse.getString("mensaje")
+                        Snackbar.make(view, "Login exitoso: $mensaje", Snackbar.LENGTH_SHORT).show()
                         // Extraer y guardar la cookie de sesión
                         val cookies = response.headers("Set-Cookie")
                         for (cookie in cookies) {
@@ -85,15 +99,12 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this@MainActivity, DashboardActivity::class.java)
                         startActivity(intent)
                         finish()
-                    }
-                } else {
-                    val mensaje = jsonResponse.getString("mensaje")
-                    runOnUiThread {
-                        Toast.makeText(this@MainActivity, "Login fallido: $mensaje", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val mensaje = jsonResponse.getString("mensaje")
+                        Snackbar.make(view, "Login fallido: $mensaje", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }
-
         })
     }
 }
