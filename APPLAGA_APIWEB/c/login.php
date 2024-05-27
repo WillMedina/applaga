@@ -60,13 +60,35 @@ class login implements controlador
         die();
     }
 
+    public function api_datosusuario()
+    {
+        header('Content-Type: application/json');
+        if (sesion::existe_sesion()) {
+
+            $bd = bd::getInstance();
+
+            $datos = json_decode(file_get_contents('php://input'), true);
+            $usuario = htmlentities($datos['usuario']);
+
+            echo json_encode(["resultado" => 1, 'mensaje' => 'OK', 'datos' => sesion::info_sesion_id($usuario)]);
+            die();
+        } else {
+            echo json_encode(["resultado" => 0, "mensaje" => "No autorizado"]);
+        }
+    }
+
     public function c_login()
     {
         //esto es un link de api : login/c_login
         header('Content-Type: application/json');
 
         if (sesion::existe_sesion()) {
-            echo json_encode(["resultado" => 0, "mensaje" => 'sesion existente']);
+            echo json_encode(
+                    [
+                        "resultado" => 0,
+                        "mensaje" => 'La sesion ya existe'
+                    ]
+            );
             die();
         }
 
@@ -95,11 +117,25 @@ class login implements controlador
             } else {
                 //en teoria el usuario es unico asi que siempre devolvera un solo registro
                 $comprobado = utils::verificarHash($pass, $logins[0]['HASH']);
+
                 if ($comprobado) {
-                    sesion::crear_sesion($logins[0]['LOGIN_ID']);
-                    echo json_encode(["resultado" => 1, "mensaje" => 'El usuario ha sido correctamente autenticado']);
+                    $login_id = $logins[0]['LOGIN_ID'];
+                    sesion::crear_sesion($login_id);
+                    echo json_encode(
+                            [
+                                "resultado" => 1,
+                                "datos" => sesion::info_sesion_id($usuario),
+                                "mensaje" => 'El usuario ha sido correctamente autenticado'
+                            ]
+                    );
                 } else {
-                    echo json_encode(["resultado" => 0, "mensaje" => 'Error en la autenticaci&oacute;n']);
+                    echo json_encode(
+                            [
+                                "resultado" => 0,
+                                "datos" => [],
+                                "mensaje" => 'Error en la autenticaci&oacute;n'
+                            ]
+                    );
                 }
             }
 

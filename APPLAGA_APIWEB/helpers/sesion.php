@@ -34,6 +34,41 @@ class sesion
         }
     }
 
+    static function info_sesion_id($login_username)
+    {
+        try {
+            $bd = bd::getInstance();
+            $listar_datos = $bd->store_procedure('buscar_login', [$login_username]);
+
+            if ($listar_datos[0]["resultado"] == "0") {
+                return null;
+            } else {
+                $tipousuario = (($listar_datos[0]["TABLA"] == "cliente") ? "CLIENTE" : $listar_datos[0]["TIPOUSUARIO"]);
+                return [
+                    "LOGIN_ID" => $listar_datos[0]["resultado"],
+                    "USUARIO" => $listar_datos[0]["USUARIO"],
+                    "TIPO" => $tipousuario,
+                ];
+
+                /* TODO: TRATAR DE TRAER ESTO:
+                 * "SESION_ID" => ,
+                  "LOGIN_ID" => ,
+                  "USUARIO" => ,
+                  "TIPO" => ,
+                  "FINICIO" => ,
+                  "TIEMPO_TRANSCURRIDO" => ,
+                  "COOKIE" => ,
+                  "IP" => ,
+                  "BROWSER" =>
+                 */
+            }
+        } catch (Throwable $exc) {
+            logger::log("Error interno obteniendo datos del usuario. " . $login_username . " Excepcion: " . $exc->getMessage(),
+                    'sesion:info_sesion_id');
+            return null;
+        }
+    }
+
     static function info_sesion()
     {
         if (self::existe_sesion()) {
