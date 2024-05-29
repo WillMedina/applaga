@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/menu/navigation_drawer.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_item"
+        android:title="Main Item">
+        <menu>
+            <item
+                android:id="@+id/action_Inicio"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Inicio"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_Servicios"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Servicios"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_Puntodecontrol"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Punto de control"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_Bibliotecadedatos"
+                android:icon="@drawable/ic_logout"
+                android:title="Biblioteca de datos"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Salir"
+                android:checkable="true"/>
+        </menu>
+    </item>
+</menu>
+
