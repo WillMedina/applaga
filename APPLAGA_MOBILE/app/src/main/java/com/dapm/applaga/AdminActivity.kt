@@ -1,8 +1,11 @@
 package com.dapm.applaga
 
+
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -15,6 +18,7 @@ class AdminActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var dialog: AlertDialog // Declaración del objeto dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +41,7 @@ class AdminActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_logout -> {
-                    logout()
+                    confirmLogout()
                     true
                 }
                 else -> {
@@ -46,6 +50,31 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun confirmLogout() {
+        AlertDialog.Builder(this)
+            .setTitle("¿Deseas salir?")
+            .setPositiveButton("Aceptar") { dialogInterface: DialogInterface, i: Int ->
+                // Muestra el diálogo de progreso
+                showProgressDialog()
+
+                // Inicia el proceso de logout
+                logout()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun showProgressDialog() {
+        // Infla el layout del diálogo de progreso
+        val dialogView = layoutInflater.inflate(R.layout.dialog_progress, null)
+        dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        dialog.show()
     }
 
     private fun logout() {
@@ -63,9 +92,11 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
 
-
             override fun onResponse(call: Call, response: Response) {
                 runOnUiThread {
+                    // Cierra el diálogo de progreso una vez que se recibe la respuesta
+                    dialog.dismiss()
+
                     if (response.isSuccessful) {
                         // Limpiar cualquier información de sesión almacenada localmente
                         val sharedPreferences =
@@ -92,9 +123,4 @@ class AdminActivity : AppCompatActivity() {
         })
     }
 }
-
-
-
-
-
 

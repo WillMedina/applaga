@@ -35,13 +35,26 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- Texto de bienvenida -->
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Bienvenido a Applaga Admin Sistema, elija una de las opciones de la barra de la izquierda (o del botón de menú en la versión móvil) para poder operar"
-                android:textSize="16sp" />
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bienvenido a Administrador del Sistema"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Elige una de las opciones de la barra de la izquierda o del botón de menú en la versión móvil para operar."
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <!-- Tarjeta con imagen y acción -->
             <com.google.android.material.card.MaterialCardView
@@ -93,6 +106,7 @@
         android:visibility="gone"
         app:headerLayout="@layout/header_navigation_drawer_admin"
         app:menu="@menu/navigation_drawer_administrador" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

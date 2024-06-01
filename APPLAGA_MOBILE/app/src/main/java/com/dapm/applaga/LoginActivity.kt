@@ -3,9 +3,11 @@ package com.dapm.applaga
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +26,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val isDarkTheme = isDarkTheme()
+
+        // Establecer el logo según el tema
+        val logoResId = if (isDarkTheme) R.drawable.logo_de_login_obscuro else R.drawable.logo_de_login_claro
+        findViewById<ImageView>(R.id.appPlagaLogo).setImageResource(logoResId)
 
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
@@ -36,7 +43,10 @@ class LoginActivity : AppCompatActivity() {
             redirectToNextScreen()
         }
     }
-
+    private fun isDarkTheme(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
     fun login(view: View) {
         val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()

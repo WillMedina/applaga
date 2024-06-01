@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +19,9 @@
         android:layout_height="111dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:src="@drawable/logo_de_login" />
+        app:srcCompat="@drawable/logo_de_login_claro"
+        tools:src="@drawable/logo_de_login_obscuro" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameTextInputLayout"
