@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -43,10 +44,12 @@ class LoginActivity : AppCompatActivity() {
             redirectToNextScreen()
         }
     }
+
     private fun isDarkTheme(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
+
     fun login(view: View) {
         val username = usernameEditText.text.toString()
         val password = passwordEditText.text.toString()
@@ -58,7 +61,10 @@ class LoginActivity : AppCompatActivity() {
 
         progressIndicator.visibility = View.VISIBLE
 
-        val client = OkHttpClient()
+        val cookieJar = MyCookieJar()
+        val client = OkHttpClient.Builder()
+            .cookieJar(cookieJar)
+            .build()
 
         // Crear JSON para la solicitud
         val jsonObject = JSONObject().apply {
@@ -68,7 +74,6 @@ class LoginActivity : AppCompatActivity() {
 
         val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
         val requestBody = RequestBody.create(mediaType, jsonObject.toString())
-        progressIndicator.visibility = View.VISIBLE
 
         val request = Request.Builder()
             .url("https://beta.applaga.net/login/c_login")
@@ -78,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
+                Log.e("LoginActivity", "onFailure: ${e.message}", e)
                 runOnUiThread {
                     progressIndicator.visibility = View.GONE
                     Snackbar.make(view, "Error de conexión", Snackbar.LENGTH_SHORT).show()
@@ -85,40 +91,48 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
+                val responseData = response.body?.string()
+                Log.d("LoginActivity", "onResponse: $responseData")
                 runOnUiThread {
                     progressIndicator.visibility = View.GONE
                 }
                 if (!response.isSuccessful) {
                     runOnUiThread {
-                        Snackbar.make(view, "Error en la solicitud", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(view, "Error en la solicitud: ${response.message}", Snackbar.LENGTH_SHORT).show()
                     }
                     return
                 }
 
-                val responseData = response.body?.string()
-                val jsonResponse = JSONObject(responseData)
-                val resultado = jsonResponse.optInt("resultado")
+                try {
+                    val jsonResponse = JSONObject(responseData)
+                    val resultado = jsonResponse.optInt("resultado")
 
-                runOnUiThread {
-                    if (resultado == 1) {
-                        progressIndicator.visibility = View.GONE
-                        val mensaje = jsonResponse.getString("mensaje")
-                        val datosObject: JSONObject = jsonResponse.getJSONObject("datos")
-                        val tipoCliente = datosObject.getString("TIPO")
+                    runOnUiThread {
+                        if (resultado == 1) {
+                            val mensaje = jsonResponse.getString("mensaje")
+                            val datosObject: JSONObject = jsonResponse.getJSONObject("datos")
+                            val tipoCliente = datosObject.getString("TIPO")
 
-                        Snackbar.make(view, "Login exitoso: $mensaje", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(view, "Login exitoso: $mensaje", Snackbar.LENGTH_SHORT).show()
 
-                        // Guardar el estado de la sesión
-                        with(sharedPreferences.edit()) {
-                            putBoolean("logged_in", true)
-                            putString("tipo_cliente", tipoCliente)
-                            apply()
+                            // Guardar el estado de la sesión
+                            with(sharedPreferences.edit()) {
+                                putBoolean("logged_in", true)
+                                putString("tipo_cliente", tipoCliente)
+                                apply()
+                            }
+
+                            redirectToNextScreen()
+                        } else {
+                            val mensaje = jsonResponse.getString("mensaje")
+                            Snackbar.make(view, "Login fallido: $mensaje", Snackbar.LENGTH_SHORT).show()
                         }
-
-                        redirectToNextScreen()
-                    } else {
-                        val mensaje = jsonResponse.getString("mensaje")
-                        Snackbar.make(view, "Login fallido: $mensaje", Snackbar.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e("LoginActivity", "onResponse: ${e.message}", e)
+                    runOnUiThread {
+                        Snackbar.make(view, "Error procesando la respuesta", Snackbar.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -136,4 +150,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+
 }
