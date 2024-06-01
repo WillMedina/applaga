@@ -1,0 +1,121 @@
+<div class="contenedor_panel">
+    <h1>Biblioteca de datos: equipos</h1>
+    <p class="texto-bold">
+        <a href="{URL}/panel/datos">Biblioteca de datos</a> &rtrif; Equipos
+    </p>
+    <form onsubmit="return false">
+        <button onclick="registrar_equipo()"><i class="fas fa-plus-square"></i> Registrar nuevo equipo</button>
+        <button onclick="cargar_equipos()">Refrescar datos</button>
+        <button disabled="disabled">Inventario de equipos</button>
+    </form>    
+    <div class="panel">
+        <table class="responsive espaciado tabla-blanca">
+            <thead>
+                <tr>
+                    <th style="max-width: 25%">Nombre</th>
+                    <th style="max-width: 25%">Ficha t&eacute;cnica</th>
+                    <th style="max-width: 25%" class="solo-desktop">Descripci&oacute;n</th>
+                    <th style="max-width: 25%"><i class="fas fa-cogs"></i></th>
+                </tr>
+            </thead>
+            <tbody id="tbody_listado_equipos"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal_borrar_equipo" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2 style="color:red">Borrar equipo</h2>
+        <div class="panel panel-alerta" style="color:black">
+            <i class="fas fa-exclamation-triangle"></i> Est&aacute; a punto de borrar el equipamento <b><span id="equipo_a_borrar"></span></b>, 
+            <u>esta acci&oacute;n es IRREVERSIBLE</u>, 
+            y tenga en cuenta que recuperar la informaci&oacute;n de este equipamento requerir&aacute; 
+            ponerse en contacto con soporte t&eacute;cnico. &iquest;Est&aacute; seguro que desea borrar el equipamento?
+        </div>
+        <div>&nbsp;</div>
+        <form onsubmit="return false">
+            <input type="hidden" id="borrar_equipo_id">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="borrar_equipo_ok(this)" class="input-alerta">
+                            <i class="fas fa-trash-alt"></i> S&Iacute;, BORRRAR</button>&nbsp;
+                        <button onclick="cancelar_borrado_equipo(this)">CANCELAR</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_editar_equipo" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Editar equipamento</h2>
+        <form onsubmit="return false" class="panel panel-exito" style="color: var(--negro) !important">
+            <input type="hidden" id="editar_equipo_id">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre:<br>
+                        <input class="responsive" type="text" id="editar_equipo_nombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripci&oacute;n:<br>
+                        <textarea class="responsive" id="editar_equipo_descripcion"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ficha t&eacute;cnica:<br>
+                        <textarea class="responsive" id="editar_equipo_fichatecnica"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="editar_equipo_ok(this)"><i class="fas fa-save"></i> Editar equipo</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_registrar_equipo" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Registrar nuevo equipamento</h2>
+        <form onsubmit="return false" class="panel panel-exito" style="color: var(--negro) !important">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre:<br>
+                        <input class="responsive" type="text" id="registrar_equipo_nombre" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripci&oacute;n:<br>
+                        <textarea class="responsive" id="registrar_equipo_descripcion"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ficha t&eacute;cnica:<br>
+                        <textarea class="responsive" id="registrar_equipo_fichatecnica"></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="registrar_equipo_ok(this)"><i class="fas fa-save"></i> Registrar equipo</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

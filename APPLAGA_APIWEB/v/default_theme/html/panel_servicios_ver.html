@@ -1,0 +1,191 @@
+<div class="contenedor_panel">
+    <h1>Reporte de servicio <br class="solo-movil"><span class="texto-alerta-leve"><b><code>{N_CONSTANCIA}</code></b></span> [<code>{CODIGO_UNICO}</code>]</h1>
+    <button class="input-info" onclick="documentacion(this)">
+        <i class="fas fa-cloud"></i> Documentos adjuntos
+    </button>
+    <button class="input-info" onclick="galeria(this)">
+        <i class="fas fa-images"></i> Fotos
+    </button> 
+    <button class="input-info" onclick="serv_pc(this)">
+        <i class="fas fa-map-marker-alt"></i> Puntos de control
+    </button>|
+    <button class="input-exito" onclick="to(http + '/panel/servicio/editar/{VISITA_ID}')">
+        <i class="fas fa-edit"></i> Editar servicio
+    </button>
+    <button class="input-alerta" onclick="modal_anular_servicio()">
+        <i class="fas fa-trash-alt"></i> Anular servicio
+    </button>
+
+    <div class="clearfix">&nbsp;</div>
+    <div class="panel panel-exito" style="color:var(--negro) !important">
+        <div id="show_datos">
+            <b>Informaci&oacute;n del servicio realizado</b>
+            <div style="margin-bottom:2px; text-align: right;"><b>&Uacute;LTIMA MODIFICACI&Oacute;N: </b><code>{ULTIMA_MODIFICACION}</code></div>
+            <table class="responsive noborder tabla-blanca tabla-sombra">
+                <tr>
+                    <td colspan="2">
+                        <b>C&oacute;digo &uacute;nico:</b><br>
+                        <code><b>{CODIGO_UNICO}</b></code>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><b>Inicio</b><br>{INICIO}</td>
+                    <td style="width:50%"><b>Fin:</b><br>{FIN}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>[Cliente] Raz&oacute;n social:</b><br>
+                        [{CLIENTE}] {RAZONSOCIAL}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Direcci&oacute;n:</b><br>
+                        {DIRECCION}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><b>Responsable:</b><br>{RESPONSABLE}</td>
+                    <td style="width:50%"><b>Cargo:</b><br>{CARGO_RESPONSABLE}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Observaci&oacute;n del cliente:</b><br>
+                        {OBS_CLI}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Observaciones y recomendaciones:</b><br>
+                        {OBS_REC}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:50%"><b>N&uacute;mero de certificado:</b><br>{N_CERTIFICADO}</td>
+                    <td style="width:50%"><b>Fecha de vencimiento de certificado:</b><br>{VENCIMIENTO_CERTIFICADO}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Condiciones internas:</b><br>
+                        {COND_INT}
+                    </td>
+                    <td>
+                        <b>Condiciones externas:</b><br>
+                        {COND_EXT}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>&iquest;El cliente di&oacute; el visto bueno?:</b><br> 
+                        {VISTO_BUENO}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="clearfix" id="show_cfx2">&nbsp;</div>
+        <div id="show_operarios">
+            <b>Operarios involucrados</b>
+            <!--  <div style="margin-bottom:2px; text-align: right;"><a href="javascript:void(0)"><i class="fas fa-edit"></i> Editar informaci&oacute;n</a></div> -->
+            <table class="noborder tabla-blanca tabla-sombra responsive">
+                <tr>
+                    <th style="width:50%">OPERARIO</th>
+                    <th style="width:50%">SUPERVISOR</th>
+                </tr>
+                <tbody>
+                    {LISTA_OPERARIOS_TR}
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix" id="show_cfx3">&nbsp;</div>
+        <div id="show_servicios">
+            <b>Servicios realizados</b>
+            <!-- div style="margin-bottom:2px; text-align: right;"><a href="javascript:void(0)"><i class="fas fa-edit"></i> Editar informaci&oacute;n</a></div>-->
+            <table class="noborder tabla-blanca tabla-sombra responsive">
+                <tr>
+                    <th>SERVICIO</th>
+                </tr>
+                <tbody>
+                    {LISTA_SERVICIOS_REALIZADOS_TR}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="clearfix" id="show_cfx4">&nbsp;</div>
+        <div id="show_productos">
+            <b>Productos utilizados</b>
+            <!-- <div style="margin-bottom:2px; text-align: right;"><a href="javascript:void(0)"><i class="fas fa-edit"></i> Editar informaci&oacute;n</a></div> -->
+            <table class="noborder tabla-blanca tabla-sombra responsive">
+                <tr>
+                    <th>PRODUCTO</th>
+                </tr>
+                <tbody>
+                    {LISTA_PRODUCTOS_TR}
+                </tbody>
+            </table>
+        </div>
+        <div class="clearfix" id="show_cfx5">&nbsp;</div>
+        <div id="show_equipos">
+            <b>Equipos utilizados</b>
+            <!-- <div style="margin-bottom:2px; text-align: right;">
+                <a href="javascript:void(0)"><i class="fas fa-edit"></i> Editar informaci&oacute;n</a>
+            </div> -->
+            <table class="noborder tabla-blanca tabla-sombra responsive">
+                <tr>
+                    <th>EQUIPO</th>
+                </tr>
+                <tbody>
+                    {LISTA_EQUIPOS_TR}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modal_listar_archivos" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Repositorio de servicio</h2>
+        <form onsubmit="return false">
+            <table class="responsive tabla-blanca tabla-sombra">
+                <thead>
+                    <tr>
+                        <th style="width:33%">Nombre</th>
+                        <th style="width:33%">Extension</th>
+                        <th style="width:33%"><i class="fas fa-cogs"></i></th>
+                    </tr>
+                </thead>
+                <tbody id="listado_archivos_tabla"></tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_anular_servicio" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Anulaci&oacute;n del servicio</h2>
+        <div class="panel panel-alerta" style="color:black">
+            <i class="fas fa-exclamation-triangle"></i> Est&aacute; a punto de anular el servicio 
+            <b><span id="servicio_a_borrar"></span></b>, <u>esta acci&oacute;n es IRREVERSIBLE</u>, 
+            y tenga en cuenta que recuperar la informaci&oacute;n de este servicio requerir&aacute; 
+            ponerse en contacto con soporte t&eacute;cnico. &iquest;Est&aacute; seguro que desea anular el servicio?
+        </div>
+        <div>&nbsp;</div>
+        <form onsubmit="return false">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="anular_servicio_ok(this)" class="input-alerta">
+                            <i class="fas fa-trash-alt"></i> S&Iacute;, ANULAR</button>&nbsp;
+                        <button onclick="cancelar_anular_servicio(this)">CANCELAR</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script>
+    var visita_id_static = {VISITA_ID};
+    var visita_codigo_unico = '{CODIGO_UNICO}';
+</script>

@@ -1,0 +1,233 @@
+@import url("colores.css");
+@import url("componentes.css");
+@import url("componentesHTML.css");
+@import url("fuentes.css");
+@import url("tablas.css");
+@import url("modales.css");
+
+html, body{
+    height: 100%
+}
+
+body{
+    background-color: var(--blanco);
+    color: #000;
+    font-family: "Roboto", sans-serif;
+    /* font-family: 'Century_Gothic', sans-serif; */
+    margin: 0 auto;
+
+}
+
+.contenedor{
+    /* width: 100%; */
+    /* padding: 5px; */
+    background-color: var(--blanco);
+    /* -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.responsive{
+    width: 100%;
+}
+
+.contenedor_panel{
+    /*width: 100%; */
+    padding: 1%;
+    font-family: "Roboto", sans-serif;
+    font-size: 13px;
+}
+
+.contenedor_panel a{
+    text-decoration: none;
+}
+
+.contenedor_panel a:hover, .contenedor_panel a:active{
+    text-decoration: underline;
+}
+
+table.noborder td{
+    border: 0px;
+}
+
+.header{
+    background-color: var(--negro1);
+    padding: 10px;
+    max-height: 80px;
+}
+
+/* auxiliar de flex */
+.contenido_flex{
+    position:relative;
+    display:flex;
+    flex-direction: row;
+    flex: auto;
+}
+
+nav{
+    background-color: var(--negro1);
+    width: 200px;
+}
+
+nav a{
+    display:block;
+    color: var(--blanco);
+    text-align: center;
+    text-decoration: none;
+    padding: 8px 0px 8px 0px;
+    border-bottom: 1px solid var(--blanco2);
+}
+
+.sidebar-desktop{
+    min-width: 200px;
+}
+
+nav a:hover{
+    background-color: var(--blanco);
+    color: var(--negro1);
+}
+
+.contenido{
+    background-color: var(--blanco);
+    flex: auto;
+    min-height: 100%;
+}
+
+nav, .menu{
+    display: unset;
+}
+
+.header_m{
+    display:none;
+}
+
+.menu_m{
+    display: none;
+}
+
+.logo_m{
+    display:none;
+}
+
+.burguer{
+    background-color: var(--negro1) !important;
+}
+
+/* ------- BURGUER BUTTON --------- */
+.burger-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 18px;
+    width: 22px;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    height: 3px;
+    background-color: #fff;
+}
+
+
+/* ------- BURGUER BUTTON --------- */
+.sidebar-mobile{
+    display:none;
+}
+
+#menu-mobile {
+    /*background: var(--negro1);*/
+    z-index: 999;
+    text-align: center;
+    padding: 9px;
+    position: absolute;
+    /*top: 60px; */
+    left: 5px;
+}
+
+#menu-mobile nav{
+
+}
+
+#menu-mobile nav a{
+    background-color: var(--negro1);
+    padding: 20px !important;
+    display: block;
+    /* margin: 5px; */
+
+    font-size: 15px;
+    color: var(--blanco);
+}
+
+#menu-mobile a {
+
+}
+
+.menu-mobile-hidden {
+    display: none;
+}
+
+
+footer{
+    text-align:center;
+    background-color: var(--negro);
+    color: var(--blanco);
+
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 4px 0px 4px 0px;
+}
+
+.solo-movil{
+    display:none !important;
+}
+
+/* CELULAR DE 600PX */
+@media only screen and (max-width: 600px) {
+    /*********** DIVS QUE DEBEN OCULTARSE *************/
+    /*nav, .menu {*/
+    .sidebar-desktop, .menu{
+        display:none;
+    }
+    /*********** DIVS QUE DEBEN OCULTARSE *************/
+
+    /*********** DIVS QUE DEBEN MOSTRARSE *************/
+    .menu_m{
+        display: unset;
+        flex: 1;
+        flex-basis: 50%;
+    }
+    /*********** DIVS QUE DEBEN MOSTRARSE *************/
+
+    .logo_m{
+        display: unset;
+        flex: 1;
+        flex-basis: 50%;
+        text-align:right;
+    }
+
+    .header_m{
+        display: flex !important;
+        align-items: center;
+        position: relative; /* agregar */
+        z-index: 1; /* agregar */
+    }
+
+    .contenido{
+        /* esto mantiene los bordes dentro del div general en el responsive*/
+        box-sizing: border-box;
+    }
+
+    .solo-desktop{
+        display:none !important;
+    }
+
+    .solo-movil{
+        display:unset !important;
+    }
+
+}

@@ -1,0 +1,23 @@
+<div class="contenedor_panel">
+    <h1>Puntos de control en <br class="solo-movil">
+        <span class="texto-alerta-leve"><b><code>{N_CONSTANCIA}</code></b></span> [<code>{CODIGO_UNICO}</code>]</h1>
+    <button class="input-info" onclick="datos_servicio(this)">
+        <i class="fas fa-paste"></i> Regresar al servicio
+    </button> |
+    <button class="input-info" onclick="data_ceb()">
+        <i class="fas fa-map-marker-alt"></i> ROEDORES
+    </button>
+    <button class="input-info" onclick="data_ins()">
+        <i class="fas fa-bug"></i> INSECTOS
+    </button>
+    <button class="input-info" onclick="actualizar_pc(this)">
+        <i class="fas fa-sync-alt"></i> Actualizar lista
+    </button>
+    <div id="servicio_puntos" style="color:var(--negro) !important"></div>
+</div>
+
+<script>
+    var visita_id_static = {VISITA_ID};
+    var visita_codigo_unico = '{CODIGO_UNICO}';
+    var local_id = '{LOCAL_ID}';
+</script>

@@ -1,0 +1,113 @@
+<div class="contenedor_panel">
+    <h1>Biblioteca de datos: Clientes</h1>
+    <p class="texto-bold"><a href="{URL}/panel/datos">Biblioteca de datos</a> &rtrif; Clientes</p>
+    <form onsubmit="return false">
+        <button onclick="registrar_cliente()"><i class="fas fa-plus-square"></i> Registrar nuevo cliente</button>
+    </form>
+    <div class="panel">
+        <table class="tabla-blanca responsive espaciado">
+            <tr>
+                <th style="width:25%">Nombre clave</th>
+                <th style="width:25%">Raz&oacute;n social</th>
+                <th style="width:25%">RUC</th>
+                <th style="width:25%"><i class="fas fa-cogs"></i></th>
+            </tr>
+            <tbody id="tbody_listado_clientes"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal_borrar_cliente" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2 style="color:red">Borrar cliente</h2>
+        <div class="panel panel-alerta" style="color:black">
+            <i class="fas fa-exclamation-triangle"></i> Est&aacute; a punto de borrar al cliente <b><span id="cliente_a_borrar"></span></b>, <u>esta acci&oacute;n es IRREVERSIBLE</u>, 
+            y tenga en cuenta que recuperar la informaci&oacute;n de este cliente requerir&aacute; 
+            ponerse en contacto con soporte t&eacute;cnico. &iquest;Est&aacute; seguro que desea borrar el cliente?
+        </div>
+        <div>&nbsp;</div>
+        <form onsubmit="return false">
+            <input type="hidden" id="borrar_cliente_clienteid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="borrar_cliente_ok(this)" class="input-alerta">
+                            <i class="fas fa-trash-alt"></i> S&Iacute;, BORRRAR</button>&nbsp;
+                        <button onclick="cancelar_borrado(this)">CANCELAR</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_registrar_cliente" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Registrar nuevo cliente</h2>
+        <form onsubmit="return false">
+            <input type="hidden" id="registrar_cliente_clienteid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre clave:<br>
+                        <input class="responsive" type="text" id="registrar_cliente_nombreclave"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Raz&oacute;n social:<br>
+                        <input class="responsive" type="text" id="registrar_cliente_razonsocial"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        RUC:<br>
+                        <input class="responsive" type="text" id="registrar_cliente_ruc"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="registrar_cliente_ok(this)"><i class="fas fa-save"></i> Registrar cliente</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div id="modal_editar_cliente" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Editar cliente</h2>
+        <form onsubmit="return false">
+            <input type="hidden" id="editar_cliente_clienteid">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        Nombre clave:<br>
+                        <input class="responsive" type="text" id="editar_cliente_nombreclave"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Raz&oacute;n social:<br>
+                        <input class="responsive" type="text" id="editar_cliente_razonsocial"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        RUC:<br>
+                        <input class="responsive" type="text" id="editar_cliente_ruc"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">
+                        <button onclick="editar_cliente_ok(this)"><i class="fas fa-save"></i> Guardar cambios</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

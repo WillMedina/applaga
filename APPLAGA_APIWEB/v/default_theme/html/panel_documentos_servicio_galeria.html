@@ -1,0 +1,86 @@
+<div class="contenedor_panel">
+    <h1>Fotos del servicio <br class="solo-movil">
+        <span class="texto-alerta-leve"><b><code>{N_CONSTANCIA}</code></b></span> [<code>{CODIGO_UNICO}</code>]</h1>
+    <button class="input-info" onclick="datos_servicio(this)">
+        <i class="fas fa-paste"></i> Regresar al servicio
+    </button> |
+
+    <button class="input-info" onclick="subir_fotos(this)">
+        <i class="fas fa-upload"></i> Subir fotos
+    </button>
+
+    <button class="input-info" onclick="actualizar_fotos(this)">
+        <i class="fas fa-sync-alt"></i> Actualizar lista
+    </button>
+
+    <div class="clearfix">&nbsp;</div>
+    <div id="fotos_servicio_contenido" style="color:var(--negro) !important"></div>
+</div>
+
+<div id="modal_mostrar_foto" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2 id="mostrar_foto_nombre"></h2>
+        <div id="mostrar_foto_foto"></div>
+        <div class="clearfix">&nbsp;</div>
+        <div id="mostrar_foto_descripcion" style="text-align: center"></div>
+        <div class="clearfix">&nbsp;</div>
+        <div id="mostrar_foto_opciones" style="text-align: center"></div>
+    </div>
+</div>
+
+<div id="modal_subida_fotos" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Subir documentos</h2>
+        <form onsubmit="return false;" id="formulario_subida_documento" enctype="multipart/form-data">
+            <table class="tabla-sombra tabla-blanca responsive noborder">
+                <tr>
+                    <td>
+                        <label for="txtNombreArchivo">Nombre</label><br>
+                        <input type="text" id="txtNombreArchivo" class="responsive">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="cboReemplazar">Reemplazar</label><br>
+                        <select id="cboReemplazar" class="responsive"><option value="0">No reemplazar ning&uacute;n documento</option></select><br>
+                        <small>El archivo elegido pasar&aacute; a desactivarse</small>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="txtDescripcion">Descripci&oacute;n</label><br>
+                        <textarea placeholder="opcional" id="txtDescripcion" class="responsive"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="archivo">Archivo</label><br>
+                        <input type="file" 
+                               id="archivo" 
+                               class="responsive" 
+                               accept="image/jpeg, image/jpg, image/png">
+                        <small>Tipos permitidos: JPG, JPEG, PNG</small>
+                    </td>
+                </tr>
+                <tr id="tr_carga" style="display:none">
+                    <td class="td_center">
+                        <progress id="subida_carga_bar" max="100" value="0"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_center">
+                        <button onclick="subir_documento_ok(this)">Subir</button>
+                        <button onclick="cancelar_subir_archivos(this, 'modal_subida_fotos')">Cancelar</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script>
+    var visita_id_static = {VISITA_ID};
+    var visita_codigo_unico = '{CODIGO_UNICO}';
+</script>

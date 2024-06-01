@@ -1,0 +1,25 @@
+<div class="contenedor_panel">
+    <h1>Mis servicios</h1>
+    <form onsubmit="return false">
+        <table class="noborder tabla-blanca tabla-sombra" style='width: 99%'>
+            <tr>
+                <td style='width:70%'>
+                    <small>Local:</small><br>
+                    <select id="cboLocales" class='responsive'>
+                        <option value='0'>Seleccione un local...</option>
+                    </select><br>
+                    <small>Del:</small><br>
+                    <input type="date" id="fecha1" class="responsive"><br>
+                    <small>Al:</small><br>
+                    <input type="date" id="fecha2" class="responsive">
+                </td>
+                <td class="td_center" style='width:30%'>
+                    <button onclick="cliente_listar_visitas(this)"><i class="fas fa-search"></i> Buscar</button>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+    <div>&nbsp;</div>
+    <div id='div_resultados'></div>
+</div>

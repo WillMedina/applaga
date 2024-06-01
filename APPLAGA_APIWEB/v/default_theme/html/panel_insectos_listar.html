@@ -1,0 +1,95 @@
+<div class="contenedor_panel">
+    <h1>Puntos de control - Insectos</h1>
+    <form onsubmit="return false">
+        <button disabled="disabled"><i class="fas fa-plus-square"></i> Registrar nuevo punto de control</button>
+    </form>
+
+    <div class="panel panel-exito">
+        <form onsubmit="return false">
+            <table class="responsive espaciado noborder">
+                <tr>
+                    <td style="width:33%">
+                        <select id="cboClientes" class="responsive" onchange="llenarLocales()"></select>
+                    </td>
+                    <td style="width:33%">
+                        <select id="cboLocal" class="responsive">
+                            <option value="0">Todos los locales...</option>
+                        </select>
+                    </td>
+                    <td style="width:33%">
+                        <button class="responsive" onclick="buscarPuntos(this)"><i class="fas fa-search-location"></i> Solo listar puntos</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select class="responsive" id="cboMonth">
+                            <option value="1">ENERO</option>
+                            <option value="2">FEBRERO</option>
+                            <option value="3">MARZO</option>
+                            <option value="4">ABRIL</option>
+                            <option value="5">MAYO</option>
+                            <option value="6">JUNIO</option>
+                            <option value="7">JULIO</option>
+                            <option value="8">AGOSTO</option>
+                            <option value="9">SETIEMBRE</option>
+                            <option value="10">OCTUBRE</option>
+                            <option value="11">NOVIEMBRE</option>
+                            <option value="12">DICIEMBRE</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="responsive" id="cboYear">
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button onclick="buscarTotalesPuntos(this)" class="responsive"><i class="fas fa-search-location"></i> VISTA MENSUAL</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select class="responsive" id="cboGraficos">
+                            <option value="0">Seleccionar gr&aacute;fico...</option>
+                            <option value="total_mes">Total de insectos por mes (gr&aacute;fico anual)</option>
+                            <option value="total_especies">Insectos por especies (gr&aacute;fico anual)</option>
+                            <option value="prj_especies">Porcentaje de especies (gr&aacute;fico mensual)</option>
+                        </select>
+                    </td>
+                    <td><button onclick="insectos_total_mes(this)" class="responsive"><i class="fas fa-chart-line"></i> Mostrar</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div>&nbsp;</div> 
+    <div id="div_resultados"></div>
+    <div>&nbsp;</div>
+</div>
+
+<div id="modal_seleccionar_rango_consumos" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Seleccione un rango de fechas</h2>
+        <form id="selector_rango_form" onsubmit="return false">
+            <div class="panel panel-exito">
+                <small>Inicio:</small><br>
+                <input type="date" id="fecha1" class="responsive"><br>
+                <small>Fin:</small><br>
+                <input type="date" id="fecha2" class="responsive"><br>
+                <input type="hidden" id="modal_rango_fecha_punto_id">
+                <button onclick="ver_consumos_ok(this)"><i class="fas fa-search"></i> Buscar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal_ver_qr" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>C&oacute;digo QR</h2>
+        <div id="codigo_qr_modal" style="text-align: center"></div>
+        <div id="codigo_qr_uuid" style="text-align: center"></div>
+    </div>
+</div>

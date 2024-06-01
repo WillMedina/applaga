@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{TITULO}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link href="{URL_THEME}/css/fuentes.css?v={STATICVERSION}" rel="stylesheet" type="text/css" />
+        <link href="{URL_THEME}/css/componentes.css?v={STATICVERSION}" rel="stylesheet" type="text/css" /> -->
+        <link href="{URL_THEME}/css/main.css?v={STATICVERSION}" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="{URL_THEME}/img/favicon.ico">
+    </head>
+    <body>
+        <div class="contenedor">
+            <div class="header">
+                <div class="menu">
+                    <img src="{URL_THEME}/img/logo_login.png" height="25"/>
+                </div>
+
+                <div class="header_m">
+                    <div class="menu_m">
+                        <div class="burger-button">
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                            <span class="bar"></span>
+                        </div>
+                    </div>
+
+                    <div class="logo_m">
+                        <img src="{URL_THEME}/img/logo_login.png" height="25" alt="" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="contenido_flex">
+                <nav class="sidebar-desktop">
+                    <a href="{URL}/panel">INICIO</a>
+                    {SIDEBAR}
+                    <a href="javascript:salir()">SALIR</a>
+                </nav>
+
+                <div id="menu-mobile" class="menu-mobile-hidden">
+                    <nav>
+                        <a href="{URL}/panel">INICIO</a>
+                        {SIDEBAR}
+                        <a href="javascript:salir()">SALIR</a>
+                    </nav>
+                </div>
+
+                <div class="contenido">
+                    {CONTENIDO} 
+                </div>
+            </div>
+            <footer>
+                &copy; Copyright {YEAR} - Control Ambiental S.A.
+            </footer>
+        </div>
+        <script>
+            var http = '{URL}';
+        </script>
+        {JS}
+        <script defer src="{URL}/v/icons/js/all.js"></script>
+        <script defer src="{URL}/v/funcjs/panel_general.js?v={STATICVERSION}"></script>
+    </body>
+</html>

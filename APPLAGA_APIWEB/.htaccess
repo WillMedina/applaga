@@ -1,0 +1,62 @@
+# Redirigir a HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Activar la reescritura de URL
+RewriteEngine On
+RewriteBase /
+
+# Si la URL no corresponde a un archivo o directorio existente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todas las solicitudes a index.php con la URL completa como parametro
+RewriteRule ^(.+)/?$ index.php?url=$1 [L,QSA]
+
+# -------------- EDICION WILL -------------------------------------
+# Bloqueo de acceso directo a archivos sensibles
+<FilesMatch "^(wp-config\.php|php\.ini|\.htaccess|readme\.html)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Evitar la lista de directorios
+Options -Indexes
+
+# Prevenir la ejecucion de scripts en ciertos directorios
+<FilesMatch "\.(pl|py|cgi)$">
+    Deny from all
+</FilesMatch>
+
+# Configurar cabeceras de seguridad
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "SAMEORIGIN"
+
+<FilesMatch "\.oti$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<Files "*.ini">
+    Require all denied
+</Files>
+
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+    Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+</IfModule>
+
+# protect from sql injection
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L] 
+# -------------- EDICION WILL -------------------------------------
+
+deny from 49.12.155.122
+deny from 91.92.242.136
+deny from 181.214.206.86
+deny from 85.214.210.13
+deny from 91.92.247.67

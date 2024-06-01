@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>APPLAGA CAPTURA</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{URL_THEME}/css/captura.css?v={STATICVERSION}"/>
+        <link rel="icon" type="image/x-icon" href="{URL_THEME}/img/favicon.ico">
+    </head>
+    <body>
+        <div class="app">
+            <header>
+                <img src="{URL_THEME}/img/logo_login.png" height="25"/>
+            </header>
+            <div class="contenido_captura" id="login">
+                {MENSAJE}
+                <form onsubmit="return false">
+                    <input type="hidden" id="codigo_unico" name="codigo_unico" value="{CODIGO_UNICO}" />
+                    <table class="responsive noborder espaciado tabla-blanca">
+                        <tr>
+                            <td style="width: 50%">Operario en campo:</td>
+                            <td style="width: 50%"><input id="txtUsuario" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%">Contrase&ntilde;a:</td>
+                            <td style="width: 50%"><input id="txtPass" type="password"></td>
+                        </tr>
+                        <tr style="text-align: center">
+                            <td colspan="2">
+                                <button onclick="iniciar_sesion()">Ingresar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+        <footer>&nbsp;</footer>
+        <script>var http = '{URL}';</script>
+        {JS}
+        <script defer src="{URL}/v/icons/js/all.js"></script>
+    </body>
+</html>

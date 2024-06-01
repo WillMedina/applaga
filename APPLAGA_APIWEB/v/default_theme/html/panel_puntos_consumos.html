@@ -1,0 +1,79 @@
+<div class="contenedor_panel">
+    <h1>Historial consumos punto <small class="texto-info-fuerte">#{PUNTOCONTROL_NUMERO} "{PUNTOCONTROL_UBICACION_LOCAL}"</small> <br class="solo-movil"><code>({CODIGO_UNICO})</code></h1>
+    <a href="javascript:void(0)" onclick="toggle_qr_informacion()"><small>Datos e informaci&oacute;n <i class="fas fa-chevron-down"></i></small></a><br>&nbsp;
+    <div id="panel_informacion" class="panel panel-exito" style="color: 1px solid var(--negro1) !important; display: none; ">
+        <table class="responsive noborder">
+            <tbody>
+                <tr>
+                    <td style="width:20%" rowspan="6">
+                        <img id="imagenQR" class="responsive" src="" alt="Imagen QR de {CODIGO_UNICO}">
+                    </td>
+                    <td style="width:80%; padding-left: 1%">
+                        <b>Nombre</b><br>
+                        {PUNTOCONTROL_NOMBRE}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 1%">
+                        <b>Ubicaci&oacute;n en local</b><br>
+                        {PUNTOCONTROL_UBICACION_LOCAL}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 1%">
+                        <b>Cliente - Local</b><br>
+                        [{CLIENTE_NOMBRECLAVE}] {CLIENTE_RAZONSOCIAL} - {CLIENTELOCAL_DIRECCION}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 1%">
+                        <b>N&uacute;mero</b><br>
+                        {PUNTOCONTROL_NUMERO}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 1%">
+                        <b>Unidad medida</b><br>
+                        {UNIDADMEDIDA}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 1%">
+                        <b>Geo</b><br>
+                        {PUNTOCONTROL_GEOLOCALIZACION}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>&nbsp;</div> 
+    <div class="panel panel-exito">
+        <form onsubmit="return false">
+            <table class="noborder responsive">
+                <tr>
+                    <td style="width:33%">
+                        <input type='date' id='fecha1' class='responsive td_center'>
+                    </td>
+                    <td style="width:33%">
+                        <input type='date' id='fecha2' class='responsive td_center'>
+                    </td>
+                    <td style="width:33%" class='td_center'><button onclick="buscarConsumos('{PUNTOCONTROL_ID}', this)"><i class="fas fa-search"></i> Buscar</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div>&nbsp;</div>
+    <div id="div_resultados"></div>
+</div>
+
+<div id="modal_ver_observaciones" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Observaciones del operario</h2>
+        <div id="texto_observaciones"></div>
+    </div>
+</div>
+
+<script>
+    var qr_codigounico = '{CODIGO_UNICO}';
+</script>

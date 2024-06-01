@@ -1,0 +1,293 @@
+<div class="contenedor_panel">
+    <h1>Edicion del servicio ({VISITA_ID}) <br class="solo-movil"><code>{CODIGO_UNICO}</code></h1>
+    <form id="formulario_editar_servicio" onsubmit="return false" class="panel panel-exito" style="color: var(--negro)!important">
+        <input type="hidden" name="visita_id" value="{VISITA_ID}" id="visita_id" >
+        <table class="responsive espaciado noborder tabla_1col">
+            <tr>
+                <td>
+                    Cliente:<br>
+                    <select class="responsive" id="cboClientes" onchange="llenarLocales()">
+                        <option value="0">Seleccionar un cliente...</option>
+                    </select>
+                </td>
+                <td>
+                    Local<br>
+                    <select class="responsive" id="cboLocal">
+                        <option value="0">Seleccionar un local...</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Responsable del local<br>
+                    <input type="text" class="responsive" id="txtResponsable" value="{RESPONSABLE_LOCAL}"/>
+                </td>
+                <td>
+                    Cargo<br>
+                    <input type="text" class="responsive" id="txtCargoResponsable" value="{CARGO}"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    N&uacute;mero de constancia<br>
+                    <input type="text" class="responsive" id="txtNConstancia" value="{N_CONSTANCIA}" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Inicio del servicio<br>
+                    <!-- <input type="datetime-local" class="responsive" id="txtInicio" /> -->
+                    <input type="date" id="txtFechaInicio">-
+                    <input type="number" id="txtHoraInicio" min="1" max="12">:
+                    <input type="number" id="txtMinutosInicio" min="0" max="59">&nbsp;
+                    <select id="cboAMPMInicio">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </td>
+                <td >
+                    Fin del servicio<br>
+                    <!-- <input type="datetime-local" class="responsive" id="txtFin" /> -->
+                    <input type="date" id="txtFechaFin">-
+                    <input type="number" id="txtHoraFin" min="1" max="12">:<input type="number" id="txtMinutosFin" min="0" max="59">&nbsp;
+                    <select id="cboAMPMFin">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    N&uacute;mero de certificado (dejar en blanco si no se emiti&oacute;)<br>
+                    <input type="text" class="responsive" id="txtNCertificado" value="{N_CERTIFICADO}"/>
+                </td>
+                <td>
+                    Vencimiento de certificado (dejar en blanco si no se emiti&oacute;)<br>
+                    <input type="date" class="responsive" id="txtVencimientoCertificado"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Observaciones y recomendaciones<br>
+                    <textarea class="responsive" id="txtObservacionesRecomendaciones">{OBS_REC}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Observaciones del cliente<br>
+                    <textarea class="responsive" id="txtObservacionesCliente">{OBS_CLI}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Condiciones internas<br>
+                    <select class="responsive" id="cboCondInt">
+                        <option value="BUENA">BUENAS</option>
+                        <option value="REGULAR">REGULARES</option>
+                        <option value="MALA">MALAS</option>
+                    </select>
+                </td>
+                <td>
+                    Condiciones externas<br>
+                    <select class="responsive" id="cboCondExt">
+                        <option value="BUENA">BUENAS</option>
+                        <option value="REGULAR">REGULARES</option>
+                        <option value="MALA">MALAS</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    &iquest;El cliente di&oacute; el visto bueno?<br>
+                    <select class="responsive" id="cboVistoBueno">
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
+                    </select>
+                </td>
+            </tr>
+            <!--
+            <tr>
+                <td colspan="2" style="border-top: 1px solid var(--negro) !important;border-bottom: 1px solid var(--negro) !important">
+                    <b>Lista de Operarios</b><br>
+                    <button onclick="modal_gestionar_operarios()">
+                        <i class="fas fa-plus-square"></i> Gestionar operarios
+                    </button><br>
+                    <ul id="listaOperarios" class="panel">
+                        <li>Aqu&iacute; se listar&aacute;n los Operarios participantes en el servicio</li>
+                    </ul>
+                    <input type="hidden" id="listaoperarios_input"> 
+                    <input type="hidden" id="listasupervisores_input">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-bottom:1px solid var(--negro) !important">
+                    <b>Servicios realizados</b><br>
+                    <button onclick="modal_gestionar_servicios()">
+                        <i class="fas fa-plus-square"></i> Gestionar servicios realizados
+                    </button><br>
+                    <ul id="listaServiciosrealizados" class="panel">
+                        <li>Aqu&iacute; se listar&aacute;n los servicios efectuados</li>
+                    </ul>
+                    <input type="hidden" id="listaservicios_input">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-bottom:1px solid var(--negro) !important">
+                    <b>Productos utilizados</b><br>
+                    <button onclick="modal_gestionar_productos()">
+                        <i class="fas fa-plus-square"></i> Gestionar productos
+                    </button><br>
+                    <ul id="listaProductos" class="panel">
+                        <li>Aqu&iacute; se listar&aacute;n los productos utilizados</li>
+                    </ul>
+                    <input type="hidden" id="listaproductos_input">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-bottom:1px solid var(--negro) !important">
+                    <b>Equipos utilizados</b><br>
+                    <button onclick="modal_gestionar_equipos()">
+                        <i class="fas fa-plus-square"></i> Gestionar equipos
+                    </button><br>
+                    <ul id="listaEquipos" class="panel">
+                        <li>Aqu&iacute; se listar&aacute;n los equipos utilizados</li>
+                    </ul>
+                    <input type="hidden" id="listaequipos_input">
+                </td>
+            </tr>
+            -->
+            <!-- BOTONES -->
+            <tr>
+                <td class="td_center" colspan="2">
+                    <button type="button" class="input-exito" id="btnEditarServicio" onclick="editarServicio(this)">
+                        <i class="fas fa-save"></i> Editar
+                    </button>
+                    <button type="button" class="input-alerta" id="btnCancelarEditarServicio">
+                        <i class="fas fa-window-close"></i> Cancelar
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- ----------------------------------- MODALES ----------------------------------- -->
+
+<div class="modal" id="mensaje_error">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Se detectaron los siguientes errores:</h2>
+        <span id="mensaje_error_contenido"></span>
+    </div>
+</div>
+
+<div class="modal" id="gestion_equipos">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Equipamentos utilizados</h2>
+        <form id="gestionequipos_listaEquipos_form" onsubmit="return false">
+            <table class="responsive tabla-blanca espaciado">
+                <thead>
+                    <tr>
+                        <th style="width:80%">Equipo</th>
+                        <th style="width:20%">Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody id="gestionequipos_listaEquipos"></tbody>
+            </table>
+            <div class="clearfix">&nbsp;</div>
+            <div style="text-align:right">
+                <button class="input-exito" onclick="modal_gestionar_equipos_seleccionar()">Seleccionar</button>
+                <button class="input-alerta" onclick="modal_gestionar_equipos_cerrar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal" id="gestion_productos">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Productos utilizados</h2>
+        <form id="gestionproductos_listaProductos_form" onsubmit="return false">
+            <table class="responsive tabla-blanca espaciado">
+                <thead>
+                    <tr>
+                        <th style="width:40%">Producto</th>
+                        <th style="width:40%">Ingrediente activo</th>
+                        <th style="width:20%">Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody id="gestionproductos_listaProductos"></tbody>
+            </table>
+            <div class="clearfix">&nbsp;</div>
+            <div style="text-align:right">
+                <button class="input-exito" onclick="modal_gestionar_productos_seleccionar()">Seleccionar</button>
+                <button class="input-alerta" onclick="modal_gestionar_productos_cerrar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="gestion_serviciosrealizados">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Servicios realizados</h2>
+        <form id="gestionservicios_listaServicios_form" onsubmit="return false">
+            <table class="responsive tabla-blanca espaciado">
+                <thead>
+                    <tr>
+                        <th style="width:80%">Servicio</th>
+                        <th style="width:20%">Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody id="gestionservicios_listaServicios"></tbody>
+            </table>
+            <div class="clearfix">&nbsp;</div>
+            <div style="text-align:right">
+                <button class="input-exito" onclick="modal_gestionar_servicios_seleccionar()">Seleccionar</button>
+                <button class="input-alerta" onclick="modal_gestionar_servicios_cerrar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="gestion_operarios">
+    <div class="modal-content">
+        <span class="close" onclick="cerrar_modal(this.parentNode.parentNode)"><i class="fas fa-times"></i></span>
+        <h2>Gestionar operarios</h2>
+        <form id="gestionoperarios_listaOperarios_form" onsubmit="return false">
+            <table class="responsive tabla-blanca espaciado">
+                <thead>
+                    <tr>
+                        <th style="width:55%">Nombre</th>
+                        <th style="width:25%">DNI</th>
+                        <th style="width:10%"><small>Selecc.</small></th>
+                        <th style="width:10%"><small>Superv.</small></th>
+                    </tr>
+                </thead>
+                <tbody id="gestionoperarios_listaOperarios"></tbody>
+            </table>
+            <div class="clearfix">&nbsp;</div>
+            <div style="text-align:right">
+                <button class="input-exito" onclick="modal_gestionar_operarios_seleccionar()">Seleccionar</button>
+                <button class="input-alerta" onclick="modal_gestionar_operarios_cerrar()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    /*La constancia va para luego verificar si se cambia*/
+    const predeterminados_editar = {
+        visita_id: '{VISITA_ID}',
+        n_constancia : '{N_CONSTANCIA}',
+        cliente_id: '{CLIENTE_ID}',
+        local_id: '{LOCAL_ID}',
+        dt_inicio: '{DT_INICIO}',
+        dt_fin: '{DT_FIN}',
+        v_certificado: '{V_CERTIFICADO}',
+        cond_int: '{COND_INT}',
+        cond_ext: '{COND_EXT}',
+        visto_bueno: '{VISTO_BUENO}'
+    };
+</script>

@@ -1,0 +1,35 @@
+:root {
+    /* ---- APPLAGA -------- */
+    --verde-control1 : #8AC640;
+    --verde-control2: #8fc74a;
+    --verde-control3: #00b8b8;
+    --verde-applaga2: #2e4f26;
+    --verde-applaga: #1aa325;
+    --acero1: #67838c;
+    --acero2: #6d868f;
+    --blanco2: #f5f5f5;
+    --gris10: #e6e6e6;
+    /* ---- APPLAGA -------- */
+
+    --negro: #000000;
+    --negro1: #1A1A1A;
+    --blanco: #FFF;
+    --gris-claro1: #F7F7F7;
+    --gris-claro2: #EDEDED;
+
+
+    --azul-oscuro1: #0D3B66;
+    --azul-claro1: #0077B5;
+
+    --alerta-leve: #FF8080;
+    --alerta-fuerte: #B30000; /* Necesita fondo blanco */
+
+    --advertencia-leve: #FFF0B3;
+    --advertencia-fuerte: #FFC107;
+
+    --info-leve: #6FB1FC;
+    --info-fuerte: #001f3f;
+
+    --exito-leve: #B7E4C7;
+    --exito-fuerte: #007E33;
+}

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>APPLAGA CAPTURA</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{URL_THEME}/css/captura.css?v={STATICVERSION}"/>
+        <link rel="icon" type="image/x-icon" href="{URL_THEME}/img/favicon.png">
+    </head>
+    <body>
+        <div class="app">
+            <header>
+                <img src="{URL_THEME}/img/logo_login.png" height="25"/>
+            </header>
+            <div class="contenido_captura">
+                <div style="padding: 5px;">Bienvenido, {NOMBRE_OP}</div>
+                <form onsubmit="return false" id="formulario_captura">
+                    <table id="tabla_formulario_captura" class="responsive tabla-blanca tabla-sombra noborder">
+                        <tbody>
+                            <!-- <tr>
+                                <td style="width: 50%">
+                                    <b>Nombre</b>
+                                </td>
+                                <td style="width: 50%">{PUNTOCONTROL_NOMBRE}</td>
+                            </tr> -->
+                            <tr>
+                                <td style="width: 50%">
+                                    <b>Ubicaci&oacute;n en local</b>
+                                </td>
+                                <td style="width: 50%">
+                                    {PUNTOCONTROL_UBICACION_LOCAL}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Cliente</b>
+                                </td>
+                                <td>
+                                    {CLIENTE_RAZONSOCIAL}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Local</b>
+                                </td>
+                                <td>{CLIENTELOCAL_DIRECCION}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>N&uacute;mero</b>
+                                </td>
+                                <td>
+                                    {PUNTOCONTROL_NUMERO}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Modelo</b>
+                                </td>
+                                <td>
+                                    {PUNTOCONTROL_MODELO}
+                                </td>
+                            </tr>
+                            <tr style="border-top: 2px solid var(--negro)">
+                                <td colspan="2" style="text-align:center">
+                                    <b>CAPTURA DE DATOS</b>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Deterioro<br>
+                                    <select class="responsive" id="cboDeterioro">
+                                        <option value="NO PRESENTA">NO PRESENTA</option>
+                                        <option value="PRESENTA">PRESENTA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    Recambio<br>
+                                    <select class="responsive" id="cboRecambio">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lepid&oacute;pteros<br><input type="number" id="lepidopteros" class="responsive" value="0"></td>
+                                <td>Microlepid&oacute;pteros<br><input type="number" id="microlepidopteros" class="responsive" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Hem&iacute;pteros<br><input type="number" id="hemipteros" class="responsive" value="0"></td>
+                                <td>Cole&oacute;pteros<br><input type="number" id="coleopteros" class="responsive" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td>Moscas<br><input type="number" id="moscas" class="responsive" value="0"></td>
+                                <td>Mosquitos<br><input type="number" id="mosquitos" class="responsive" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Otros<br><input type="number" id="otros" class="responsive" value="0"></td>
+                            </tr>
+                            <tr style="border-top: 2px solid var(--negro)">
+                                <td>Servicio de referencia (opcional)</td>
+                                <td><input id="txtServicioReferencia" type="text" class="responsive" placeholder="(n&uacute;mero de constancia)"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Observaciones:<br>
+                                    <textarea id="txtObservaciones" class="responsive"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:center">
+                                    <input type="hidden" id="punto_id" value="{PUNTOCONTROL_ID}">
+                                    <input type="hidden" id="operario_id" value="{USUARIO_ID}">
+                                    <input type="hidden" id="geo_lat">
+                                    <input type="hidden" id="geo_long">
+                                    <button onclick="registrar_consumo(this)">
+                                        <i class="fas fa-save"></i> Registrar consumo del punto
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="tabla_formulario_confirmacion_captura" class="responsive tabla-blanca tabla-sombra noborder" style="display:none" >
+                        <tr style="border-bottom: 2px solid var(--negro)">
+                            <td colspan="2" style="text-align:center">
+                                <b class="texto-info-fuerte">CONFIRMACI&Oacute;N DE ENV&Iacute;O DE DATOS</b><br>
+                                <small>Revise cuidadosamente los datos que va a enviar y confirme el registro o cancele para correcciones</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:50%"><b>Ubicaci&oacute;n de punto</b></td>
+                            <td style="width:50%">({PUNTOCONTROL_NUMERO}) {PUNTOCONTROL_UBICACION_LOCAL}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Deterioro</b><br><span id="span_deterioro"></span></td>
+                            <td><b>Recambio</b><br><span id="span_recambio"></span></td>
+                        </tr>
+
+                        <tr><td colspan="2" class="td_center">Registro de insectos</td></tr>
+                        <tr style="border-top: 2px solid var(--negro)">
+                            <td class="td_center"><b>Lepid&oacute;pteros</b><br><span id="span_lepidopteros"></span></td>
+                            <td class="td_center"><b>Microlepid&oacute;pteros</b><br><span id="span_microlepidopteros"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td_center"><b>Hem&iacute;pteros</b><br><span id="span_hemipteros"></span></td>
+                            <td class="td_center"><b>Cole&oacute;pteros</b><br><span id="span_coleopteros"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="td_center"><b>Moscas</b><br><span id="span_moscas"></span></td>
+                            <td class="td_center"><b>Mosquitos</b><br><span id="span_mosquitos"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="td_center"><b>Otros</b><br><span id="span_otros"></span></td>
+                        </tr>
+                        <tr style="border-top: 2px solid var(--negro)">
+                            <td><b>Servicio de referencia</b></td>
+                            <td><span id="span_referencia"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Observaciones</b><br>
+                                <span id="span_observaciones"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center" colspan="2">
+                                <button onclick="registrar_consumo_ok(this)" class="input-exito">
+                                    <i class="fas fa-save"></i> CONFIRMAR ENV&Iacute;O DE DATOS
+                                </button>
+                                <button onclick="cancelar_consumo_ok(this)" class="input-alerta">
+                                    <i class="fas fa-times"></i> CANCELAR
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table id="tabla_formulario_ok_captura" class="responsive tabla-blanca tabla-sombra noborder" style="display:none" >
+                        <tr>
+                            <td colspan="2" style="text-align:center">
+                                <b class="texto-info-fuerte">ENV&Iacute;O COMPLETADO</b><br>
+                                Se ha registrado correctamente su registro de control. Si ha tenido problemas
+                                en el registro o ha detectado alg&uacute;n inconveniente con este proceso tome una captura de 
+                                esta pantalla o simplemente copie y remita el siguiente 
+                                c&oacute;digo &uacute;nico: <br><b><code><span id="codigo_unico_registrado"></span></code></b>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <a href="javascript:void(0)" onclick="salir()">Salir</a>
+        </footer>
+        <script>var http = '{URL}';</script>
+        <script>var httpqr = '{URL}/qr/icaptura/{QR}';</script>
+        {JS}
+        <script defer src="{URL}/v/icons/js/all.js"></script>
+    </body>
+</html>

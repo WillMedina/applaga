@@ -1,0 +1,63 @@
+@import url("colores.css");
+@import url("componentes.css");
+@import url("componentesHTML.css");
+@import url("fuentes.css");
+
+body{
+    background-color: var(--verde-applaga2);
+    color: white;
+    font-family: "Lato", sans-serif;
+}
+
+a, a:hover, a:active{
+    color: var(--verde-applaga2);
+    text-decoration: none;
+}
+
+.contenedor_login{
+    text-align:center;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 5%;
+}
+
+.logo{
+    text-align:center;
+}
+
+.formulario{
+    margin: 5%;
+    margin-top: 5%;
+}
+
+.cajatexto{
+    padding: 6px 15px 6px 15px;
+    border-radius: 25px;
+    border: 2px solid #000;
+    margin: 2px;
+    /* width: 25%; */
+    width: 200px;
+    font-family: "Lato", sans-serif;
+}
+
+.boton{
+    padding: 10px;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-weight: bolder;
+    font-family: "Lato", sans-serif;
+    /* color: #1AA325; */
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #1C1C1C;
+    color: white;
+    text-align: center;
+    font-size: x-small;
+    padding-top: 1%;
+    padding-bottom:1%;
+}

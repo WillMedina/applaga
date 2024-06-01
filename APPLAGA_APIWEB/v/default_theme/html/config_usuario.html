@@ -1,0 +1,46 @@
+<div class="contenedor_panel">
+    <h1>Configuraci&oacute;n de usuario</h1>
+    <div class="panel panel-info">
+        <form onsubmit="return false" id="cambiar_pass">
+            <table class="responsive noborder espaciado tabla-blanca">
+                <tbody>
+                    <tr>
+                        <th colspan="2">Cambio de contrase&ntilde;a</th>
+                    </tr>
+                    <tr>
+                        <td style="width:30%">Nueva contrase&ntilde;a</td>
+                        <td style="width:70%">
+                            <input id="p1" type="password" class="responsive">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Repetir nueva contrase&ntilde;a</td>
+                        <td>
+                            <input id="p2" type="password" class="responsive">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button onclick="guardar_pass()"><i class="fas fa-save"></i> Guardar nueva contrase&ntilde;a</button>&nbsp;
+                            <span id="aviso_pass"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form>
+    </div>
+    <div>&nbsp;</div>
+    <h1>Sesiones iniciadas</h1>
+    <div class="panel panel-advertencia">
+        <table class="responsive noborder espaciado tabla-blanca">
+            <tr>
+                <th style="width:25%">IP</th>
+                <th style="width:25%" class="solo-desktop">Navegador/Dispositivo</th>
+                <th style="width:25%">Fecha y hora Inicio</th>
+                <th style="width:25%"><i class="fas fa-cogs"></i></th>
+            </tr>
+            <tbody id="listado_sesiones"></tbody>
+        </table>
+    </div>
+</div>
