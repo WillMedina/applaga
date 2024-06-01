@@ -52,7 +52,7 @@ class login implements controlador
     public function c_logout_api()
     {
         if (sesion::existe_sesion()) {
-            sesion::cerrar_sesion($_COOKIE["hash_sesion"]);
+            sesion::cerrar_sesion($_COOKIE[modelo::COOKIE_DATA['name']]);
         }
 
         header('Content-Type: application/json');
@@ -75,6 +75,24 @@ class login implements controlador
         } else {
             echo json_encode(["resultado" => 0, "mensaje" => "No autorizado"]);
         }
+    }
+
+    public function debug_infosesion()
+    {
+        $infosesion = [];
+
+        if (is_null(sesion::info_sesion())) {
+            $infosesion["resultado"] = 0;
+            $infosesion["mensaje"] = "No existe sesion autenticada";
+            $infosesion["datos"] = [];
+        } else {
+            $infosesion["resultado"] = 1;
+            $infosesion["mensaje"] = "OK";
+            $infosesion["datos"] = sesion::info_sesion();
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($infosesion);
     }
 
     public function c_login()

@@ -97,11 +97,17 @@ class sesion
 
     static function existe_sesion()
     {
+        /* verifica que exista una cookie, no importa cual */
         if (isset($_COOKIE[modelo::COOKIE_DATA['name']])) {
 
             $bd = bd::getInstance();
+
+            /* verifica que existe la cookie en la BD */
             $listar_sesiones = $bd->store_procedure('listar_sesion_cookie', [$_COOKIE[modelo::COOKIE_DATA['name']]]);
+
             if ($listar_sesiones[0]['resultado'] == '0') {
+
+                /* elimina la cookie en dispositivo seteando una nueva */
                 setcookie(modelo::COOKIE_DATA['name'], '',
                         [
                             'expires' => time() - 3600,
@@ -111,33 +117,44 @@ class sesion
                             'httponly' => modelo::COOKIE_DATA['httponly'],
                             'samesite' => modelo::COOKIE_DATA['samesite']
                 ]);
+
                 return false;
             } else {
                 //Revisar luego si cookie = IP o cookie = browser
                 $usuario = utils::obtener_browser_cliente();
-                //if ($usuario['ip'] == $listar_sesiones[0]['IP'] AND $usuario['browser'] == $listar_sesiones[0]['BROWSER']) {
+
+                /*
+                 * if ($usuario['ip'] == $listar_sesiones[0]['IP'] AND $usuario['browser'] == $listar_sesiones[0]['BROWSER']) {
+                 */
+
                 if ($usuario['browser'] == $listar_sesiones[0]['BROWSER']) {
-                    //todo en orden
+
+                    /* todo en orden */
                     return true;
                 } else {
-                    logger::log("Error en el match de sesion: {$usuario["ip"]}, se cambio la marca de browser: {$usuario["browser"]} en la sesion {$_COOKIE[modelo::COOKIE_DATA['name']]}",
-                            'helpers/sesion:existe_sesion_sesion');
+                    /* cerrar sesion de la cookie */
+                    self::cerrar_sesion($_COOKIE[modelo::COOKIE_DATA['name']]);
                     return false;
                 }
             }
         } else {
-            //borrar la cookie por si acaso
-            if (isset($_COOKIE[modelo::COOKIE_DATA['name']])) {
-                setcookie(modelo::COOKIE_DATA['name'], '',
-                        [
-                            'expires' => time() - 3600,
-                            'path' => modelo::COOKIE_DATA['path'],
-                            'domain' => modelo::URL_CLEAN,
-                            'secure' => modelo::COOKIE_DATA['secure'],
-                            'httponly' => modelo::COOKIE_DATA['httponly'],
-                            'samesite' => modelo::COOKIE_DATA['samesite']
-                ]);
-            }
+            /* borrar la cookie por si acaso */
+            /* 20240601 -> no entiendo bien si esto es correcto */
+            /*
+              if (isset($_COOKIE[modelo::COOKIE_DATA['name']])) {
+              setcookie(modelo::COOKIE_DATA['name'], '',
+              [
+              'expires' => time() - 3600,
+              'path' => modelo::COOKIE_DATA['path'],
+              'domain' => modelo::URL_CLEAN,
+              'secure' => modelo::COOKIE_DATA['secure'],
+              'httponly' => modelo::COOKIE_DATA['httponly'],
+              'samesite' => modelo::COOKIE_DATA['samesite']
+              ]);
+              }
+             * 
+             */
+
             return false;
         }
     }
@@ -146,6 +163,7 @@ class sesion
     {
         $bd = bd::getInstance();
         $cerrar_sesion = $bd->store_procedure('cerrar_sesion_cookie', [$hash_cookie]);
+        
         if (isset($_COOKIE[modelo::COOKIE_DATA['name']]) and $_COOKIE[modelo::COOKIE_DATA['name']] == $hash_cookie) {
             setcookie(
                     modelo::COOKIE_DATA['name'],
@@ -160,6 +178,9 @@ class sesion
                     ]
             );
         }
+
+        logger::log("Debug de cerrado de sesion: se cerro sesion de $hash_cookie",
+                'sesion::cerrar_sesion', "WARNING");
 
         return true;
     }
