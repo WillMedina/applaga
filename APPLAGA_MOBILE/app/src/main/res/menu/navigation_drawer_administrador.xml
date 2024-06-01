@@ -22,12 +22,12 @@
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_Bibliotecadedatos"
-                android:icon="@drawable/ic_logout"
+                android:icon="@drawable/icon_logout"
                 android:title="Biblioteca de datos"
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_logout"
-                android:icon="@drawable/ic_logout"
+                android:icon="@drawable/icon_logout"
                 android:title="Salir"
                 android:checkable="true"/>
         </menu>
