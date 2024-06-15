@@ -7,23 +7,18 @@
         <menu>
             <item
                 android:id="@+id/action_Inicio"
-                android:icon="@drawable/ic_launcher_foreground"
+                android:icon="@drawable/icon_inicio"
                 android:title="Inicio"
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_Servicios"
-                android:icon="@drawable/ic_launcher_foreground"
-                android:title="Servicios"
+                android:icon="@drawable/icon_punto_control"
+                android:title="Gestion de puntos"
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_Puntodecontrol"
-                android:icon="@drawable/ic_launcher_foreground"
-                android:title="Punto de control"
-                android:checkable="true"/>
-            <item
-                android:id="@+id/action_Bibliotecadedatos"
-                android:icon="@drawable/ic_launcher_foreground"
-                android:title="Biblioteca de datos"
+                android:icon="@drawable/icon_opciones"
+                android:title="Opciones"
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_logout"
