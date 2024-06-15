@@ -54,6 +54,10 @@ class ClienteActivity : AppCompatActivity() {
                     drawerLayout.close()
                     true
                 }
+                R.id.action_opciones_cliente -> {
+                    actionopcionescliente()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
@@ -62,6 +66,10 @@ class ClienteActivity : AppCompatActivity() {
         }
     }
 
+    private fun actionopcionescliente() {
+        val intent = Intent(this, OpcionesClienteActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun reloadActivity() {
         val intent = intent

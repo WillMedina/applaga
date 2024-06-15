@@ -16,7 +16,7 @@
                 android:title="Servicios"
                 android:checkable="true"/>
             <item
-                android:id="@+id/action_Puntodecontrol"
+                android:id="@+id/action_opciones_cliente"
                 android:icon="@drawable/icon_opciones"
                 android:title="Opciones"
                 android:checkable="true"/>
