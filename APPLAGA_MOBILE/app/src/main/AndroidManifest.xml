@@ -31,6 +31,7 @@
         <activity android:name=".OpcionesAdminActivity" />
         <activity android:name=".OpcionesClienteActivity" />
         <activity android:name=".GestionPuntosActivity" />
+        <activity android:name=".ServiciosClienteActivity" />
         <activity android:name=".OperarioActivity" android:screenOrientation="portrait" />
         <activity android:name=".ClienteActivity" />
     </application>
