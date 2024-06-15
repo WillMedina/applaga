@@ -58,12 +58,21 @@ class ClienteActivity : AppCompatActivity() {
                     actionopcionescliente()
                     true
                 }
+                R.id.action_Servicios -> {
+                    actionoservicios()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
                 }
             }
         }
+    }
+
+    private fun actionoservicios() {
+        val intent = Intent(this, ServiciosClienteActivity::class.java)
+        startActivity(intent)
     }
 
     private fun actionopcionescliente() {

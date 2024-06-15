@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 
-class OpcionesClienteActivity : AppCompatActivity() {
+class ServiciosClienteActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_opciones_cliente)
+        setContentView(R.layout.activity_servicios_cliente)
 
         // Configurar la barra de herramientas
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -19,7 +19,7 @@ class OpcionesClienteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         // Configurar el título de la barra de herramientas
-        supportActionBar?.title = "Opciones Cliente"
+        supportActionBar?.title = "Servicios Cliente"
     }
 
     // Manejar el botón de retroceso
