@@ -110,7 +110,8 @@ class qr extends panel implements controlador
     {
         try {
             if (!isset($this->parametros[2])) {
-                utils::redireccion_y_log($this->applaga::URL . '/panel', "Invocada la captura sin argumento de codigo unico", "c/qr:captura");
+                utils::redireccion_y_log($this->applaga::URL . '/panel',
+                        "Invocada la captura sin argumento de codigo unico", "c/qr:captura");
             }
 
             $codigo_unico = $this->parametros[2];
@@ -173,7 +174,8 @@ class qr extends panel implements controlador
                     $cambios["{UNIDADMEDIDA}"] = $punto_data->UNIDADMEDIDA_NOMBRE;
                     $cambios["{PUNTOCONTROL_GEOLOCALIZACION}"] = $punto_data->PUNTOCONTROL_GEOLOCALIZACION;
 
-                    $plantilla = $this->applaga::FOLDER . '/v/' . $this->applaga::DEFULT_THEME . '/html/captura_punto.html';
+                    $plantilla = $this->applaga::FOLDER . '/v/' . $this->applaga::DEFULT_THEME .
+                            '/html/captura_punto.html';
                 }
             }
 
@@ -223,7 +225,8 @@ class qr extends panel implements controlador
             die();
         } catch (Throwable $exc) {
             header('Content-Type: application/json');
-            echo json_encode(["resultado" => 0, 'mensaje' => 'Excepcion interna ocurrida', 'excepcion' => $exc->getMessage()]);
+            echo json_encode(["resultado" => 0, 'mensaje' => 'Excepcion interna ocurrida',
+                'excepcion' => $exc->getMessage()]);
             die();
         }
     }
@@ -319,6 +322,52 @@ class qr extends panel implements controlador
         }
     }
 
+    public function api_buscarPunto_codigoUnico()
+    {
+        $this->security_api(1);
+        try {
+            $datos = json_decode(file_get_contents('php://input'), true);
+
+            $codigo_unico = htmlentities($datos["codigo_unico"]);
+
+            $bd = bd::getInstance();
+            $sp = $bd->store_procedure('buscar_codigo_unico', [$codigo_unico]);
+
+            if ($sp[0]['RESULTADO'] == '0') {
+                header('Content-Type: application/json');
+                echo json_encode(["resultado" => 0, 'mensaje' => $sp[0]['MENSAJE'], 'datos' => $sp]);
+                die();
+            } else {
+                $id = $sp[0]['ID'];
+
+                if ($sp[0]['TABLA'] == 'punto') {
+                    $this->core_buscarPunto($id);
+                } elseif ($sp[0]['TABLA'] == 'punto_insectos') {
+                    $this->core_buscarPuntoInsectos($id);
+                }
+            }
+        } catch (Throwable $exc) {
+            header('Content-Type: application/json');
+            echo json_encode(["resultado" => 0,
+                'mensaje' => 'Excepcion interna ocurrida en api_buscarPunto_codigoUnico',
+                "line" => $exc->getLine(),
+                'excepcion' => $exc->getMessage()]);
+            die();
+        }
+    }
+
+    private function core_buscarPuntoInsectos($punto_id)
+    {
+        $bd = bd::getInstance();
+        $sp = $bd->store_procedure('obtener_punto_insectos', [$punto_id]);
+
+        header('Content-Type: application/json');
+        echo json_encode(["resultado" => 1, 'mensaje' => 'ok', 
+            'tipo' => 'punto_insectos',
+            'datos' => $sp]);
+        die();
+    }
+
     public function api_buscarPuntoInsectos()
     {
         $this->security_api(1);
@@ -326,18 +375,24 @@ class qr extends panel implements controlador
             $datos = json_decode(file_get_contents('php://input'), true);
 
             $punto_id = htmlentities($datos['punto_id']);
-
-            $bd = bd::getInstance();
-            $sp = $bd->store_procedure('obtener_punto_insectos', [$punto_id]);
-
-            header('Content-Type: application/json');
-            echo json_encode(["resultado" => 1, 'mensaje' => 'ok', 'datos' => $sp]);
-            die();
-        } catch (Exception $exc) {
+            $this->core_buscarPuntoInsectos($punto_id);
+        } catch (Throwable $exc) {
             header('Content-Type: application/json');
             echo json_encode(["resultado" => 0, 'mensaje' => 'Excepcion interna ocurrida', 'excepcion' => $exc->getMessage()]);
             die();
         }
+    }
+
+    private function core_buscarPunto($punto_id)
+    {
+        $bd = bd::getInstance();
+        $sp = $bd->store_procedure('obtener_punto', [$punto_id]);
+
+        header('Content-Type: application/json');
+        echo json_encode(["resultado" => 1, 'mensaje' => 'ok', 
+            'tipo' => 'punto',
+            'datos' => $sp]);
+        die();
     }
 
     public function api_buscarPunto()
@@ -347,14 +402,8 @@ class qr extends panel implements controlador
             $datos = json_decode(file_get_contents('php://input'), true);
 
             $punto_id = htmlentities($datos['punto_id']);
-
-            $bd = bd::getInstance();
-            $sp = $bd->store_procedure('obtener_punto', [$punto_id]);
-
-            header('Content-Type: application/json');
-            echo json_encode(["resultado" => 1, 'mensaje' => 'ok', 'datos' => $sp]);
-            die();
-        } catch (Exception $exc) {
+            $this->core_buscarPunto($punto_id);
+        } catch (Throwable $exc) {
             header('Content-Type: application/json');
             echo json_encode(["resultado" => 0, 'mensaje' => 'Excepcion interna ocurrida', 'excepcion' => $exc->getMessage()]);
             die();
