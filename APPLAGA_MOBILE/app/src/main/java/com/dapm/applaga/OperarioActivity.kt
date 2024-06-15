@@ -80,7 +80,7 @@ class OperarioActivity : AppCompatActivity() {
         }
     }
 
-    private fun reloadActivity() {|
+    private fun reloadActivity() {
         val intent = intent
         finish()
         startActivity(intent)
