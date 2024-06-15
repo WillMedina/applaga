@@ -7,13 +7,23 @@
         <menu>
             <item
                 android:id="@+id/action_Inicio"
-                android:icon="@drawable/icon_inicio"
+                android:icon="@drawable/ic_launcher_foreground"
                 android:title="Inicio"
                 android:checkable="true"/>
             <item
-                android:id="@+id/EscaneoQr"
-                android:icon="@drawable/icon_qr"
-                android:title="Escanear QR"
+                android:id="@+id/action_Servicios"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Servicios"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_Puntodecontrol"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Punto de control"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/action_Bibliotecadedatos"
+                android:icon="@drawable/ic_launcher_foreground"
+                android:title="Biblioteca de datos"
                 android:checkable="true"/>
             <item
                 android:id="@+id/action_logout"

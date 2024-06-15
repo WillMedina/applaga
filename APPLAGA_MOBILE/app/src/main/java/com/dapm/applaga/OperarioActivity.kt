@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +16,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
 class OperarioActivity : AppCompatActivity() {
 
     private lateinit var btnScan: FloatingActionButton
     private lateinit var tvResult: TextView
-    private lateinit var dialog: AlertDialog
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var dialog: AlertDialog // Declaración del objeto dialog
+    private var isLoggingOut = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operario)
@@ -34,18 +43,12 @@ class OperarioActivity : AppCompatActivity() {
         tvResult = findViewById(R.id.tvResult)
 
         btnScan.setOnClickListener {
-            val integrator = IntentIntegrator(this)
-            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            integrator.setPrompt("Escanea un código QR")
-            integrator.setCameraId(0) // Use a specific camera of the device
-            integrator.setBeepEnabled(true)
-            integrator.setBarcodeImageEnabled(true)
-            integrator.initiateScan()
+            startQRScanner()
         }
 
         // Configurar el DrawerLayout y NavigationView
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
-        val navigationView = findViewById<NavigationView>(R.id.navigationView)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navigationView)
 
         // Manejar la apertura del drawer
         toolbar.setNavigationOnClickListener {
@@ -59,7 +62,16 @@ class OperarioActivity : AppCompatActivity() {
                     confirmLogout()
                     true
                 }
-
+                R.id.EscaneoQr -> {
+                    startQRScanner()
+                    drawerLayout.close()
+                    true
+                }
+                R.id.action_Inicio -> {
+                    reloadActivity()
+                    drawerLayout.close()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
@@ -68,15 +80,31 @@ class OperarioActivity : AppCompatActivity() {
         }
     }
 
+    private fun reloadActivity() {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
+
+    private fun startQRScanner() {
+        val integrator = IntentIntegrator(this)
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+        integrator.setPrompt("Escanea un código QR")
+        integrator.setCameraId(0) // Usar cámara trasera
+        integrator.setBeepEnabled(true)
+        integrator.setBarcodeImageEnabled(true)
+        integrator.initiateScan()
+    }
+
     private fun confirmLogout() {
         AlertDialog.Builder(this)
             .setTitle("¿Deseas salir?")
             .setPositiveButton("Aceptar") { dialogInterface: DialogInterface, i: Int ->
-                // Muestra el diálogo de progreso
-                showProgressDialog()
-
-                // Inicia el proceso de logout
-                logout()
+                if (!isLoggingOut) {
+                    showProgressDialog()
+                    isLoggingOut = true
+                    logout()
+                }
             }
             .setNegativeButton("Cancelar", null)
             .show()
@@ -85,7 +113,7 @@ class OperarioActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         // Infla el layout del diálogo de progreso
         val dialogView = layoutInflater.inflate(R.layout.dialog_progress, null)
-        dialog = AlertDialog.Builder(this) // Asigna la instancia a la variable de instancia
+        dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .setCancelable(false)
             .create()
@@ -94,22 +122,37 @@ class OperarioActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        val client = OkHttpClient()
+        val sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        val sessionCookie = sharedPreferences.getString("session_cookie", "")
 
-        val request = Request.Builder()
-            .url("https://beta.applaga.net/login/c_logout")
+        val cookieJar = MyCookieJar(applicationContext)
+        val client = OkHttpClient.Builder()
+            .cookieJar(cookieJar)
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
+        val logoutUrl = "https://beta.applaga.net/login/c_logout_api".toHttpUrlOrNull()
+        if (logoutUrl == null) {
+            Snackbar.make(findViewById(android.R.id.content), "URL de logout inválida", Snackbar.LENGTH_SHORT).show()
+            return
+        }
+
+        val requestBody = RequestBody.create("application/json".toMediaTypeOrNull(), "")
+
+        val requestBuilder = Request.Builder()
+            .url(logoutUrl)
+            .post(requestBody)
+
+        if (!sessionCookie.isNullOrEmpty()) {
+            requestBuilder.addHeader("Cookie", sessionCookie)
+        }
+
+        val logoutRequest = requestBuilder.build()
+
+        client.newCall(logoutRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
                 runOnUiThread {
-                    dialog.dismiss() // Descarta el diálogo de progreso en caso de error
-                    Snackbar.make(
-                        findViewById(android.R.id.content),
-                        "Error de conexión",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Snackbar.make(findViewById(android.R.id.content), "Error de conexión. Por favor, verifica tu conexión a internet", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
@@ -117,44 +160,42 @@ class OperarioActivity : AppCompatActivity() {
                 runOnUiThread {
                     dialog.dismiss()
 
-                    if (response.isSuccessful) {                        // Limpiar cualquier información de sesión almacenada localmente
-                        val sharedPreferences =
-                            getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-                        with(sharedPreferences.edit()) {
-                            remove("session_cookie")
-                            remove("logged_in") // Eliminar el indicador de sesión activa
-                            apply()
-                        }
+                    val body = response.body?.string()
+                    Log.d("ServerResponse", "Response body: $body")
 
-                        // Redirigir a LoginActivity después de cerrar sesión
-                        val intent = Intent(this@OperarioActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Snackbar.make(
-                            findViewById(android.R.id.content),
-                            "Error al cerrar sesión",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                    try {
+                        val jsonObject = JSONObject(body)
+                        val resultado = jsonObject.optInt("resultado", -1)
+                        val mensaje = jsonObject.optString("mensaje", "")
+
+                        when (resultado) {
+                            1 -> {
+                                with(sharedPreferences.edit()) {
+                                    remove("session_cookie")
+                                    remove("logged_in")
+                                    apply()
+                                    sharedPreferences.edit().clear().apply()
+
+                                }
+                                Log.d("Logout", "Logout successful. Session cookie removed.")
+                                val intent = Intent(this@OperarioActivity, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            0 -> {
+                                Snackbar.make(findViewById(android.R.id.content), mensaje, Snackbar.LENGTH_SHORT).show()
+                            }
+                            else -> {
+                                Snackbar.make(findViewById(android.R.id.content), "Respuesta inválida del servidor", Snackbar.LENGTH_SHORT).show()
+                            }
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Snackbar.make(findViewById(android.R.id.content), "Error en el formato de la respuesta", Snackbar.LENGTH_SHORT).show()
                     }
+                    isLoggingOut = false
                 }
             }
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null) { // Comprobar si data no es nulo
-            val result: IntentResult =
-                IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if (result != null) {
-                if (result.contents == null) {
-                    tvResult.text = "Cancelada"
-                } else {
-                    tvResult.text = "Escaneada: " + result.contents
-                }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
-        }
     }
 }

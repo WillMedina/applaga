@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
         progressIndicator.visibility = View.VISIBLE
 
-        val cookieJar = MyCookieJar()
+        val cookieJar = MyCookieJar(applicationContext)
         val client = OkHttpClient.Builder()
             .cookieJar(cookieJar)
             .build()
@@ -150,6 +150,4 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
-
 }
