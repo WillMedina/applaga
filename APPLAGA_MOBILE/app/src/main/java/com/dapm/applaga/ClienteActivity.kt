@@ -49,6 +49,11 @@ class ClienteActivity : AppCompatActivity() {
                     confirmLogout()
                     true
                 }
+                R.id.action_Inicio -> {
+                    reloadActivity()
+                    drawerLayout.close()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
@@ -56,6 +61,14 @@ class ClienteActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    private fun reloadActivity() {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
+
 
     private fun confirmLogout() {
         AlertDialog.Builder(this)

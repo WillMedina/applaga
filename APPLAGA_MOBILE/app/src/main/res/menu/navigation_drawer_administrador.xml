@@ -11,12 +11,12 @@
                 android:title="Inicio"
                 android:checkable="true"/>
             <item
-                android:id="@+id/action_Servicios"
+                android:id="@+id/action_gestion_de_puntos"
                 android:icon="@drawable/icon_punto_control"
                 android:title="Gestion de puntos"
                 android:checkable="true"/>
             <item
-                android:id="@+id/action_Puntodecontrol"
+                android:id="@+id/action_opciones_admin"
                 android:icon="@drawable/icon_opciones"
                 android:title="Opciones"
                 android:checkable="true"/>

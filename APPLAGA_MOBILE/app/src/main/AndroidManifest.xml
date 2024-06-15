@@ -28,10 +28,9 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".AdminActivity" />
-        <activity
-            android:name=".OperarioActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".OpcionesAdminActivity" />
+        <activity android:name=".GestionPuntosActivity" />
+        <activity android:name=".OperarioActivity" android:screenOrientation="portrait" />
         <activity android:name=".ClienteActivity" />
     </application>
-
 </manifest>

@@ -60,6 +60,18 @@ class AdminActivity : AppCompatActivity() {
                     confirmLogout()
                     true
                 }
+                R.id.action_Inicio -> {
+                    reloadActivity()
+                    drawerLayout.close()
+                    true
+                } R.id.action_gestion_de_puntos -> {
+                actiongestiondepuntos()
+                true
+            }
+                R.id.action_opciones_admin -> {
+                    actionopcionesadmin()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
@@ -67,6 +79,23 @@ class AdminActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun actionopcionesadmin() {
+        val intent = Intent(this, OpcionesAdminActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun actiongestiondepuntos() {
+        val intent = Intent(this, GestionPuntosActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun reloadActivity() {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
+
 
 
     private fun checkSessionInfo() {
