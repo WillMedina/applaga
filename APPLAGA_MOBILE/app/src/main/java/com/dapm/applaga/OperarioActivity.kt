@@ -80,7 +80,7 @@ class OperarioActivity : AppCompatActivity() {
         }
     }
 
-    private fun reloadActivity() {
+    private fun reloadActivity() {|
         val intent = intent
         finish()
         startActivity(intent)
@@ -94,6 +94,20 @@ class OperarioActivity : AppCompatActivity() {
         integrator.setBeepEnabled(true)
         integrator.setBarcodeImageEnabled(true)
         integrator.initiateScan()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                Snackbar.make(findViewById(android.R.id.content), "Escaneo cancelado", Snackbar.LENGTH_SHORT).show()
+            } else {
+                tvResult.text = result.contents
+                // Aquí puedes agregar cualquier otra lógica que necesites con el resultado del escaneo
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     private fun confirmLogout() {
