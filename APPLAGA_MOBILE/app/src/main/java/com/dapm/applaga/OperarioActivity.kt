@@ -90,7 +90,7 @@ class OperarioActivity : AppCompatActivity() {
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         integrator.setPrompt("Escanea un código QR")
-        integrator.setCameraId(0) // Usar cámara trasera
+        integrator.setCameraId(0)
         integrator.setBeepEnabled(true)
         integrator.setBarcodeImageEnabled(true)
         integrator.initiateScan()
@@ -103,12 +103,80 @@ class OperarioActivity : AppCompatActivity() {
                 Snackbar.make(findViewById(android.R.id.content), "Escaneo cancelado", Snackbar.LENGTH_SHORT).show()
             } else {
                 tvResult.text = result.contents
-                // Aquí puedes agregar cualquier otra lógica que necesites con el resultado del escaneo
+                val codigoUnico = result.contents
+                verificarCodigoUnico(codigoUnico)
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+    private fun verificarCodigoUnico(codigoUnico: String) {
+        val cookieJar = MyCookieJar(applicationContext)
+        val client = OkHttpClient.Builder()
+            .cookieJar(cookieJar)
+            .build()
+
+        val url = "https://beta.applaga.net/qr/api_buscarPunto_codigoUnico".toHttpUrlOrNull()
+        val requestBuilder = Request.Builder()
+            .url(url!!)
+            .post(FormBody.Builder()
+                .add("codigoUnico", codigoUnico)
+                .build())
+            .build()
+
+        client.newCall(requestBuilder).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Snackbar.make(findViewById(android.R.id.content), "Error de conexión", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+                Log.d("ServerResponse", "Response body: $body")
+                runOnUiThread {
+                    try {
+                        val jsonObject = JSONObject(body)
+                        val resultado = jsonObject.optInt("resultado", -1)
+                        val mensaje = jsonObject.optString("mensaje", "")
+
+                        if (resultado == 1) {
+                            val tipo = jsonObject.optString("tipo", "")
+
+                            when (tipo) {
+                                "punto" -> {
+                                    val datosArray = jsonObject.getJSONArray("datos").toString()
+                                    val intent = Intent(this@OperarioActivity, PuntoOperarioActivity::class.java)
+                                    intent.putExtra("jsonDatos", datosArray)
+                                    startActivity(intent)
+
+                                }
+                                "punto_insectos" -> {
+
+                                    val datosArray = jsonObject.getJSONArray("datos").toString()
+                                    val intent = Intent(this@OperarioActivity, PuntoInsectoOperarioActivity::class.java)
+                                    intent.putExtra("jsonDatos", datosArray)
+                                    startActivity(intent)
+                                }
+                                else -> {
+                                    Snackbar.make(findViewById(android.R.id.content), "Tipo desconocido", Snackbar.LENGTH_SHORT).show()
+                                }
+                            }
+                        } else {
+                            Snackbar.make(findViewById(android.R.id.content), mensaje, Snackbar.LENGTH_SHORT).show()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Snackbar.make(findViewById(android.R.id.content), "Error en el formato de la respuesta", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+
 
     private fun confirmLogout() {
         AlertDialog.Builder(this)
