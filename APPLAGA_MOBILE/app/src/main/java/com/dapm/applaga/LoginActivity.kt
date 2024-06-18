@@ -9,9 +9,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.snackbar.Snackbar
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var progressIndicator: CircularProgressIndicator
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var errorResult: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.usernameEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         progressIndicator = findViewById(R.id.progressIndicator)
+        errorResult = findViewById(R.id.ErrorResult)
         sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
 
         // Verificar si hay una sesión activa al iniciar la actividad
@@ -55,11 +57,12 @@ class LoginActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString()
 
         if (username.isBlank() || password.isBlank()) {
-            Snackbar.make(view, "Por favor, complete todos los campos", Snackbar.LENGTH_SHORT).show()
+            showError("Por favor, complete todos los campos")
             return
         }
 
         progressIndicator.visibility = View.VISIBLE
+        errorResult.text = ""  // Clear previous error messages
 
         val cookieJar = MyCookieJar(applicationContext)
         val client = OkHttpClient.Builder()
@@ -86,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.e("LoginActivity", "onFailure: ${e.message}", e)
                 runOnUiThread {
                     progressIndicator.visibility = View.GONE
-                    Snackbar.make(view, "Error de conexión", Snackbar.LENGTH_SHORT).show()
+                    showError("Error de conexión")
                 }
             }
 
@@ -98,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 if (!response.isSuccessful) {
                     runOnUiThread {
-                        Snackbar.make(view, "Error en la solicitud: ${response.message}", Snackbar.LENGTH_SHORT).show()
+                        showError("Error en la solicitud: ${response.message}")
                     }
                     return
                 }
@@ -113,8 +116,6 @@ class LoginActivity : AppCompatActivity() {
                             val datosObject: JSONObject = jsonResponse.getJSONObject("datos")
                             val tipoCliente = datosObject.getString("TIPO")
 
-                            Snackbar.make(view, "Login exitoso: $mensaje", Snackbar.LENGTH_SHORT).show()
-
                             // Guardar el estado de la sesión
                             with(sharedPreferences.edit()) {
                                 putBoolean("logged_in", true)
@@ -125,18 +126,22 @@ class LoginActivity : AppCompatActivity() {
                             redirectToNextScreen()
                         } else {
                             val mensaje = jsonResponse.getString("mensaje")
-                            Snackbar.make(view, "Login fallido: $mensaje", Snackbar.LENGTH_SHORT).show()
+                            showError("$mensaje")
                         }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Log.e("LoginActivity", "onResponse: ${e.message}", e)
                     runOnUiThread {
-                        Snackbar.make(view, "Error procesando la respuesta", Snackbar.LENGTH_SHORT).show()
+                        showError("Error procesando la respuesta")
                     }
                 }
             }
         })
+    }
+
+    private fun showError(message: String) {
+        errorResult.text = message
     }
 
     private fun redirectToNextScreen() {
