@@ -8,8 +8,6 @@ import androidx.appcompat.widget.Toolbar
 
 class PuntoInsectoOperarioActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_punto_operario)

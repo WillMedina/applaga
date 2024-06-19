@@ -55,40 +55,19 @@
                     android:text="Elige una de las opciones de la barra de la izquierda o del botón de menú en la versión móvil para operar."
                     android:textSize="14sp" />
 
-            </LinearLayout>
-
-            <!-- Contenedor del resultado de escaneo -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
-                android:layout_alignParentBottom="true">
-
-                <!-- Resultado de escaneo -->
-                <TextView
-                    android:id="@+id/tvResult"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="El resultado de la lectura de QR aparecerá aquí"
-                    android:textSize="16sp" />
-
-                <!-- Botón de escaneo -->
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnScan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/icon_qr" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/icon_qr" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -101,6 +80,4 @@
         app:headerLayout="@layout/header_navigation_drawer_operario"
         app:menu="@menu/navigation_drawer_operario" />
 
-
 </androidx.drawerlayout.widget.DrawerLayout>
-

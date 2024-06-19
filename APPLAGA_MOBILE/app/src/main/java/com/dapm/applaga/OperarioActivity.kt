@@ -26,7 +26,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 class OperarioActivity : AppCompatActivity() {
 
     private lateinit var btnScan: FloatingActionButton
-    private lateinit var tvResult: TextView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var dialog: AlertDialog // Declaración del objeto dialog
@@ -41,7 +40,6 @@ class OperarioActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         btnScan = findViewById(R.id.btnScan)
-        tvResult = findViewById(R.id.tvResult)
 
         btnScan.setOnClickListener {
             startQRScanner()
@@ -103,7 +101,6 @@ class OperarioActivity : AppCompatActivity() {
             if (result.contents == null) {
                 Snackbar.make(findViewById(android.R.id.content), "Escaneo cancelado", Snackbar.LENGTH_SHORT).show()
             } else {
-                tvResult.text = result.contents
                 val codigoUnico = result.contents
                 verificarCodigoUnico(codigoUnico)
             }
