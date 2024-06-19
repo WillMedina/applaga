@@ -30,6 +30,14 @@ class PuntoOperarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_punto_operario)
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        supportActionBar?.title = "Detalles del Punto"
+
 
         tvPuntoNombre = findViewById(R.id.tvPuntoNombre)
         tvPuntoUbicacion = findViewById(R.id.tvPuntoUbicacion)
@@ -69,5 +77,13 @@ class PuntoOperarioActivity : AppCompatActivity() {
         }
     }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
