@@ -21,6 +21,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.logging.HttpLoggingInterceptor
 
 class OperarioActivity : AppCompatActivity() {
 
@@ -113,16 +114,24 @@ class OperarioActivity : AppCompatActivity() {
 
     private fun verificarCodigoUnico(codigoUnico: String) {
         val cookieJar = MyCookieJar(applicationContext)
+
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
         val client = OkHttpClient.Builder()
             .cookieJar(cookieJar)
+            .addInterceptor(logging)
             .build()
 
         val url = "https://beta.applaga.net/qr/api_buscarPunto_codigoUnico".toHttpUrlOrNull()
+
+        val jsonObject = JSONObject()
+        jsonObject.put("codigo_unico", codigoUnico)
+        val jsonBody = RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonObject.toString())
+
         val requestBuilder = Request.Builder()
             .url(url!!)
-            .post(FormBody.Builder()
-                .add("codigoUnico", codigoUnico)
-                .build())
+            .post(jsonBody)
             .build()
 
         client.newCall(requestBuilder).enqueue(object : Callback {
@@ -175,8 +184,6 @@ class OperarioActivity : AppCompatActivity() {
             }
         })
     }
-
-
 
     private fun confirmLogout() {
         AlertDialog.Builder(this)

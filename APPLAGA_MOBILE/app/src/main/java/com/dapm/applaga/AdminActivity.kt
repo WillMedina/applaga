@@ -86,7 +86,7 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun actiongestiondepuntos() {
-        val intent = Intent(this, GestionPuntosActivity::class.java)
+        val intent = Intent(this, GestionPuntosAdminActivity::class.java)
         startActivity(intent)
     }
 

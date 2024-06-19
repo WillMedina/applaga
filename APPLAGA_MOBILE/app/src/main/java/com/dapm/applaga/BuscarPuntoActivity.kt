@@ -7,7 +7,7 @@ class BuscarPuntoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_buscar_punto)
+        setContentView(R.layout.activity_buscar_punto_admin)
 
         // Aquí puedes configurar cualquier funcionalidad adicional que desees mostrar
     }

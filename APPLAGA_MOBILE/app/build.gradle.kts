@@ -43,6 +43,7 @@ dependencies {
     //navegation
     implementation ("androidx.drawerlayout:drawerlayout:1.1.1")
 
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
 
     implementation ("com.google.zxing:core:3.4.1")

@@ -29,10 +29,19 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".OpcionesAdminActivity" />
-        <activity android:name=".OpcionesClienteActivity" />
-        <activity android:name=".GestionPuntosActivity" />
-        <activity android:name=".ServiciosClienteActivity" />
+        <activity android:name=".GestionPuntosAdminActivity" />
+
+
+
+
         <activity android:name=".OperarioActivity" android:screenOrientation="portrait" />
+        <activity android:name=".PuntoOperarioActivity" />
+
+
         <activity android:name=".ClienteActivity" />
+        <activity android:name=".OpcionesClienteActivity" />
+        <activity android:name=".ServiciosClienteActivity" />
+
+
     </application>
 </manifest>
