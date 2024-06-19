@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,6 +21,8 @@ import org.json.JSONObject
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.logging.HttpLoggingInterceptor
+import android.view.View
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 class OperarioActivity : AppCompatActivity() {
 
@@ -29,6 +30,7 @@ class OperarioActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var dialog: AlertDialog // Declaración del objeto dialog
+    private lateinit var progressIndicator: CircularProgressIndicator
     private var isLoggingOut = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,7 @@ class OperarioActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         btnScan = findViewById(R.id.btnScan)
+        progressIndicator = findViewById(R.id.progressIndicator)
 
         btnScan.setOnClickListener {
             startQRScanner()
@@ -109,6 +112,7 @@ class OperarioActivity : AppCompatActivity() {
         }
     }
 
+
     private fun verificarCodigoUnico(codigoUnico: String) {
         val cookieJar = MyCookieJar(applicationContext)
 
@@ -131,10 +135,17 @@ class OperarioActivity : AppCompatActivity() {
             .post(jsonBody)
             .build()
 
+        // Mostrar el ProgressIndicator
+        runOnUiThread {
+            progressIndicator.visibility = View.VISIBLE
+        }
+
         client.newCall(requestBuilder).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
                 runOnUiThread {
+                    // Ocultar el ProgressIndicator
+                    progressIndicator.visibility = View.GONE
                     Snackbar.make(findViewById(android.R.id.content), "Error de conexión", Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -143,6 +154,9 @@ class OperarioActivity : AppCompatActivity() {
                 val body = response.body?.string()
                 Log.d("ServerResponse", "Response body: $body")
                 runOnUiThread {
+                    // Ocultar el ProgressIndicator
+                    progressIndicator.visibility = View.GONE
+
                     try {
                         val jsonObject = JSONObject(body)
                         val resultado = jsonObject.optInt("resultado", -1)
@@ -157,10 +171,8 @@ class OperarioActivity : AppCompatActivity() {
                                     val intent = Intent(this@OperarioActivity, PuntoOperarioActivity::class.java)
                                     intent.putExtra("jsonDatos", datosArray)
                                     startActivity(intent)
-
                                 }
                                 "punto_insectos" -> {
-
                                     val datosArray = jsonObject.getJSONArray("datos").toString()
                                     val intent = Intent(this@OperarioActivity, PuntoInsectoOperarioActivity::class.java)
                                     intent.putExtra("jsonDatos", datosArray)
@@ -181,6 +193,7 @@ class OperarioActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun confirmLogout() {
         AlertDialog.Builder(this)
