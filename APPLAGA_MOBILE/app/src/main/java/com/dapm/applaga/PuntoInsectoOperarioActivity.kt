@@ -88,10 +88,7 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
                         cardViewDetails.visibility = View.VISIBLE
                         cardViewClientDetails.visibility = View.GONE
                     }
-                    R.id.buttonCaptura -> {
-                        cardViewDetails.visibility = View.GONE
-                        cardViewClientDetails.visibility = View.VISIBLE
-                    }
+
 
                     R.id.buttonClientDetails -> {
                         cardViewDetails.visibility = View.GONE

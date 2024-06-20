@@ -1,264 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-    <!-- Contenido principal de la actividad -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="match_parent">
 
-        <!-- Aquí va el resto de tu contenido -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Toggle Button Group -->
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleButtonGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="visible"
-                app:singleSelection="true">
-
-                <Button
-                    android:id="@+id/buttonDetails"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Punto" />
-
-                <Button
-                    android:id="@+id/buttonCaptura"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Captura" />
-
-                <Button
-                    android:id="@+id/buttonClientDetails"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cliente" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-
-            <!-- CardView para mostrar los detalles -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewDetails"
+            <!-- Spinner para hubo_consumo -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="invisible"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Consumo:"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerHuboConsumo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/tvPuntoNombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nombre del Punto de Control"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvPuntoUbicacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ubicación Local"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvPuntoNumero"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Número de Punto"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvMedidaNombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Unidad de Medida"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                    android:entries="@array/hubo_consumo_options" />
+            </LinearLayout>
 
 
-            <!-- CardView para captura de datos -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPuntoCap"
+            <!-- EditText para medida inicial -->
+            <EditText
+                android:id="@+id/etMedidaInicial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="visible"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:hint="Medida Inicial"
+                android:inputType="numberDecimal" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginTop="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Registrar"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="8dp" />
-
-                        <Spinner
-                            android:id="@+id/spinnerRegistrar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:entries="@array/registrar_options"
-                            android:spinnerMode="dropdown" />
-
-                    </LinearLayout>
-                    <!-- Campos de texto para captura de datos -->
-                    <EditText
-                        android:id="@+id/etMedicionInicial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Medición inicial" />
-
-                    <EditText
-                        android:id="@+id/etMedicionActual"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Medición actual" />
-
-                    <CheckBox
-                        android:id="@+id/checkBoxRecambioPunto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Recambio del punto" />
-
-                    <EditText
-                        android:id="@+id/etServicioReferencia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Servicio de referencia (opcional)" />
-
-                    <EditText
-                        android:id="@+id/etObservaciones"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Observaciones" />
-                    <!-- Botón de registro -->
-                    <Button
-                        android:id="@+id/btnRegistrar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Registrar" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-
-        <!-- CardView para mostrar los detalles del Cliente -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewClientDetails"
+            <!-- EditText para medida -->
+            <EditText
+                android:id="@+id/etMedida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:visibility="invisible"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:hint="Medida"
+                android:inputType="numberDecimal" />
+            <!-- CheckBox para recambio -->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+            <CheckBox
+                android:id="@+id/checkBoxRecambioPunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recambio del punto"
+                android:layout_marginTop="16dp"/>
 
-                    <TextView
-                        android:id="@+id/tvClienteNombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nombre del Cliente"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+            <!-- EditText para observaciones -->
+            <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Observaciones"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
 
-                    <TextView
-                        android:id="@+id/tvClienteDireccion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Dirección del Cliente"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvClienteTelefono"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Teléfono del Cliente"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvClienteEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email del Cliente"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvClienteFrecuencia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Frecuencia de Servicio"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvClienteRazonSocial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Razón Social del Cliente"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tvClienteRuc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="RUC del Cliente"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            <!-- Botón para registrar consumo -->
+            <Button
+                android:id="@+id/btnRegistrarConsumo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registrar Consumo"
+                android:layout_marginTop="16dp" />
 
         </LinearLayout>
-
     </ScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
 
