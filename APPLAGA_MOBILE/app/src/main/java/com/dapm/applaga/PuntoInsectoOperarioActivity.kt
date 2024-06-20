@@ -88,6 +88,11 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
                         cardViewDetails.visibility = View.VISIBLE
                         cardViewClientDetails.visibility = View.GONE
                     }
+                    R.id.buttonCaptura -> {
+                        cardViewDetails.visibility = View.GONE
+                        cardViewClientDetails.visibility = View.VISIBLE
+                    }
+
                     R.id.buttonClientDetails -> {
                         cardViewDetails.visibility = View.GONE
                         cardViewClientDetails.visibility = View.VISIBLE
@@ -95,8 +100,6 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // Seleccionar el botón por defecto al iniciar la actividad
         toggleButtonGroup.check(R.id.buttonDetails)
     }
 

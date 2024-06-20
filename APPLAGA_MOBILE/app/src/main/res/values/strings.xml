@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Applaga</string>
+
+<!-- Otras cadenas de texto -->
+    <string-array name="registrar_options">
+        <item>No hubo consumo</item>
+        <item>Si hubo consumo</item>
+    </string-array>
 </resources>

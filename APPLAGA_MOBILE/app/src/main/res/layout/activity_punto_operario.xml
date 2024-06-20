@@ -31,21 +31,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="visible"
                 app:singleSelection="true">
 
                 <Button
-                    style="?attr/materialButtonOutlinedStyle"
                     android:id="@+id/buttonDetails"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detalle Punto" />
+                    android:text="Punto" />
 
                 <Button
+                    android:id="@+id/buttonCaptura"
                     style="?attr/materialButtonOutlinedStyle"
-                    android:id="@+id/buttonClientDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detalle Cliente" />
+                    android:text="Captura" />
+
+                <Button
+                    android:id="@+id/buttonClientDetails"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cliente" />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -55,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp">
 
@@ -97,7 +105,89 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- CardView para mostrar los detalles del Cliente -->
+
+            <!-- CardView para captura de datos -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewPuntoCap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Registrar"
+                            android:textSize="16sp"
+                            android:layout_marginEnd="8dp" />
+
+                        <Spinner
+                            android:id="@+id/spinnerRegistrar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/registrar_options"
+                            android:spinnerMode="dropdown" />
+
+                    </LinearLayout>
+                    <!-- Campos de texto para captura de datos -->
+                    <EditText
+                        android:id="@+id/etMedicionInicial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medición inicial" />
+
+                    <EditText
+                        android:id="@+id/etMedicionActual"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medición actual" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxRecambioPunto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recambio del punto" />
+
+                    <EditText
+                        android:id="@+id/etServicioReferencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Servicio de referencia (opcional)" />
+
+                    <EditText
+                        android:id="@+id/etObservaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Observaciones" />
+                    <!-- Botón de registro -->
+                    <Button
+                        android:id="@+id/btnRegistrar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Registrar" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        <!-- CardView para mostrar los detalles del Cliente -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewClientDetails"
                 android:layout_width="match_parent"
