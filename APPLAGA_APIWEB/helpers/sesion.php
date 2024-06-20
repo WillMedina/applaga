@@ -44,8 +44,10 @@ class sesion
                 return null;
             } else {
                 $tipousuario = (($listar_datos[0]["TABLA"] == "cliente") ? "CLIENTE" : $listar_datos[0]["TIPOUSUARIO"]);
+                $usuario_id = (($listar_datos[0]["TABLA"] == "cliente") ? $listar_datos[0]['CLIENTE_ID'] : $listar_datos[0]["USUARIO_ID"]);
                 return [
-                    "LOGIN_ID" => $listar_datos[0]["resultado"],
+                    "USUARIO_ID" => $usuario_id,
+                    "LOGIN_ID" => $listar_datos[0]["LOGIN_ID"],
                     "USUARIO" => $listar_datos[0]["USUARIO"],
                     "TIPO" => $tipousuario,
                 ];
