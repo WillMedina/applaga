@@ -1,84 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!-- Contenido principal de la actividad -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
+        <!-- Aquí va el resto de tu contenido -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Spinner para hubo_consumo -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Toggle Button Group -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButtonGroup"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="16dp">
+                android:layout_gravity="center"
+                app:singleSelection="true">
 
-                <TextView
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/buttonDetallePunto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Consumo:"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="8dp" />
+                    android:text="Detaille Punto" />
 
-                <Spinner
-                    android:id="@+id/spinnerHuboConsumo"
+                <Button
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:id="@+id/buttonCapturaDatos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Captura Datos" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+            <!-- CardView para mostrar los Detalle de Punto -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewDetallePunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/hubo_consumo_options" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Spinner para hubo_consumo -->
+                    <TextView
+                        android:id="@+id/tvPuntoNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre del Punto de Control"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvPuntoUbicacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ubicación Local"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvPuntoNumero"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Número de Punto"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvMedidaNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Unidad de Medida"
+                        android:textSize="16sp"/>
 
 
-            <!-- EditText para medida inicial -->
-            <EditText
-                android:id="@+id/etMedidaInicial"
+                    <TextView
+                        android:id="@+id/tvClienteNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre del Cliente"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección del Cliente"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono del Cliente"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email del Cliente"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteFrecuencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Frecuencia de Servicio"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteRazonSocial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Razón Social del Cliente"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tvClienteRuc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RUC del Cliente"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- CardView para mostrar los Captura de Datos -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewCapturaDatos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Medida Inicial"
-                android:inputType="numberDecimal" />
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-            <!-- EditText para medida -->
-            <EditText
-                android:id="@+id/etMedida"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Medida"
-                android:inputType="numberDecimal" />
-            <!-- CheckBox para recambio -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <CheckBox
-                android:id="@+id/checkBoxRecambioPunto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Recambio del punto"
-                android:layout_marginTop="16dp"/>
+                    <!-- Spinner para hubo_consumo -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
 
-            <!-- EditText para observaciones -->
-            <EditText
-                android:id="@+id/etObservaciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Observaciones"
-                android:inputType="textMultiLine"
-                android:minLines="3" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Consumo:"
+                            android:textSize="16sp"
+                            android:layout_marginEnd="8dp" />
 
-            <!-- Botón para registrar consumo -->
-            <Button
-                android:id="@+id/btnRegistrarConsumo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Registrar Consumo"
-                android:layout_marginTop="16dp" />
+                        <Spinner
+                            android:id="@+id/spinnerHuboConsumo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/hubo_consumo_options" />
+                    </LinearLayout>
+
+                    <!-- EditText para medida inicial -->
+                    <EditText
+                        android:id="@+id/etMedidaInicial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medida Inicial"
+                        android:inputType="numberDecimal" />
+
+                    <!-- EditText para medida -->
+                    <EditText
+                        android:id="@+id/etMedida"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Medida"
+                        android:inputType="numberDecimal" />
+
+                    <!-- CheckBox para recambio -->
+                    <CheckBox
+                        android:id="@+id/checkBoxRecambioPunto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recambio del punto"
+                        android:layout_marginTop="16dp" />
+
+                    <!-- EditText para observaciones -->
+                    <EditText
+                        android:id="@+id/etObservaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Observaciones"
+                        android:inputType="textMultiLine"
+                        android:minLines="3" />
+
+                    <!-- Botón para registrar consumo -->
+                    <Button
+                        android:id="@+id/btnRegistrarConsumo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Registrar Consumo"
+                        android:layout_marginTop="16dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
-
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
