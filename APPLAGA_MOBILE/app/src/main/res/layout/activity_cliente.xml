@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bienvenido a Administrador del Sistema"
+                    android:text="Bienvenido Cliente del Sistema"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:visibility="gone"
+        android:visibility="visible"
         app:headerLayout="@layout/header_navigation_drawer_cliente"
         app:menu="@menu/navigation_drawer_cliente" />
 

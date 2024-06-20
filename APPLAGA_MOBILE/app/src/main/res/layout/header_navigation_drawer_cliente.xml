@@ -14,7 +14,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="?attr/textAppearanceHeadlineSmall"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="@color/md_theme_onPrimary"
         android:text="Bienvenido" />
 
     <TextView
@@ -24,6 +24,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="?attr/textAppearanceTitleSmall"
-        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textColor="@color/md_theme_primaryContainer"
         android:text="Cliente" />
 </LinearLayout>

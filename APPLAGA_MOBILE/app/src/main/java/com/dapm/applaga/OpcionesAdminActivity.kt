@@ -19,7 +19,7 @@ class OpcionesAdminActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         // Configurar el título de la barra de herramientas
-        supportActionBar?.title = "Opciones Administrador"
+        supportActionBar?.title = "Opciones Cliente"
     }
 
     // Manejar el botón de retroceso

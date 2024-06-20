@@ -112,7 +112,6 @@ class OperarioActivity : AppCompatActivity() {
         }
     }
 
-
     private fun verificarCodigoUnico(codigoUnico: String) {
         val cookieJar = MyCookieJar(applicationContext)
 
