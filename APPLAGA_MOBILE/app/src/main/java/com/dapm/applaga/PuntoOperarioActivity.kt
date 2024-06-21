@@ -1,17 +1,18 @@
 package com.dapm.applaga
 
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
+import android.view.MenuItem
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -24,6 +25,20 @@ import java.io.IOException
 
 class PuntoOperarioActivity : AppCompatActivity() {
 
+    private lateinit var tvPuntoNombre: TextView
+    private lateinit var tvPuntoUbicacion: TextView
+    private lateinit var tvPuntoNumero: TextView
+    private lateinit var tvMedidaNombre: TextView
+    private lateinit var tvClienteNombre: TextView
+    private lateinit var tvClienteDireccion: TextView
+    private lateinit var tvClienteTelefono: TextView
+    private lateinit var tvClienteEmail: TextView
+    private lateinit var tvClienteFrecuencia: TextView
+    private lateinit var tvClienteRazonSocial: TextView
+    private lateinit var tvClienteRuc: TextView
+    private lateinit var cardViewDetallePunto: CardView
+    private lateinit var cardViewCapturaDatos: CardView
+
     private lateinit var btnRegistrarConsumo: Button
     private lateinit var spinnerHuboConsumo: Spinner
     private lateinit var checkBoxRecambioPunto: CheckBox
@@ -31,38 +46,35 @@ class PuntoOperarioActivity : AppCompatActivity() {
     private lateinit var etMedida: EditText
     private lateinit var etObservaciones: EditText
 
+    private lateinit var toggleButtonGroup: MaterialButtonToggleGroup
+
     private var puntoId: String = ""
-    private var usuarioId: Int = 0
     private var latitud: Double? = null
     private var longitud: Double? = null
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    companion object {
+        private const val PERMISSION_REQUEST_LOCATION = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_punto_operario)
 
-        // Obtener datos del intent
+        setupToolbar()
+        initializeViews()
+        setupToggleButtonGroup()
+        loadDataFromIntent()
+
+
         val jsonDatos = intent.getStringExtra("jsonDatos")
-
-        // Inicializar vistas
-        btnRegistrarConsumo = findViewById(R.id.btnRegistrarConsumo)
-        spinnerHuboConsumo = findViewById(R.id.spinnerHuboConsumo)
-        checkBoxRecambioPunto = findViewById(R.id.checkBoxRecambioPunto)
-        etMedidaInicial = findViewById(R.id.etMedidaInicial)
-        etMedida = findViewById(R.id.etMedida)
-        etObservaciones = findViewById(R.id.etObservaciones)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        usuarioId = intent.getIntExtra("usuario_id", 0)
-
 
         if (jsonDatos != null) {
             try {
                 val jsonArray = JSONArray(jsonDatos)
                 if (jsonArray.length() > 0) {
-                    val jsonObject = jsonArray.getJSONObject(0) // Tomar el primer objeto del arreglo
+                    val jsonObject = jsonArray.getJSONObject(0)
                     puntoId = jsonObject.getString("PUNTOCONTROL_ID")
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "No se encontraron datos", Snackbar.LENGTH_SHORT).show()
@@ -75,9 +87,9 @@ class PuntoOperarioActivity : AppCompatActivity() {
             Snackbar.make(findViewById(android.R.id.content), "No se recibieron datos", Snackbar.LENGTH_SHORT).show()
         }
 
-        // Configurar el botón para registrar consumo
         btnRegistrarConsumo.setOnClickListener {
             pedirUbicacion()
+            registrarConsumo()
         }
 
         locationCallback = object : LocationCallback() {
@@ -94,23 +106,103 @@ class PuntoOperarioActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupToolbar() {
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "Punto de Control"
+    }
+
+    private fun initializeViews() {
+        tvPuntoNombre = findViewById(R.id.tvPuntoNombre)
+        tvPuntoUbicacion = findViewById(R.id.tvPuntoUbicacion)
+        tvPuntoNumero = findViewById(R.id.tvPuntoNumero)
+        tvMedidaNombre = findViewById(R.id.tvMedidaNombre)
+        tvClienteNombre = findViewById(R.id.tvClienteNombre)
+        tvClienteDireccion = findViewById(R.id.tvClienteDireccion)
+        tvClienteTelefono = findViewById(R.id.tvClienteTelefono)
+        tvClienteEmail = findViewById(R.id.tvClienteEmail)
+        tvClienteFrecuencia = findViewById(R.id.tvClienteFrecuencia)
+        tvClienteRazonSocial = findViewById(R.id.tvClienteRazonSocial)
+        tvClienteRuc = findViewById(R.id.tvClienteRuc)
+        cardViewDetallePunto = findViewById(R.id.cardViewDetallePunto)
+        cardViewCapturaDatos = findViewById(R.id.cardViewCapturaDatos)
+        btnRegistrarConsumo = findViewById(R.id.btnRegistrarConsumo)
+
+        spinnerHuboConsumo = findViewById(R.id.spinnerHuboConsumo)
+        checkBoxRecambioPunto = findViewById(R.id.checkBoxRecambioPunto)
+        etMedidaInicial = findViewById(R.id.etMedidaInicial)
+        etMedida = findViewById(R.id.etMedida)
+        etObservaciones = findViewById(R.id.etObservaciones)
+
+        toggleButtonGroup = findViewById(R.id.toggleButtonGroup)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    private fun setupToggleButtonGroup() {
+        toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            when (checkedId) {
+                R.id.buttonDetallePunto -> {
+                    if (isChecked) {
+                        cardViewDetallePunto.visibility = android.view.View.VISIBLE
+                        cardViewCapturaDatos.visibility = android.view.View.GONE
+                    }
+                }
+                R.id.buttonCapturaDatos -> {
+                    if (isChecked) {
+                        cardViewDetallePunto.visibility = android.view.View.GONE
+                        cardViewCapturaDatos.visibility = android.view.View.VISIBLE
+                    }
+                }
+            }
+        }
+        toggleButtonGroup.check(R.id.buttonDetallePunto)
+    }
+    private fun loadDataFromIntent() {
+        val jsonDatos = intent.getStringExtra("jsonDatos")
+        if (jsonDatos != null) {
+            parseAndDisplayData(jsonDatos)
+        }
+    }
+
+    private fun parseAndDisplayData(jsonDatos: String) {
+        try {
+            val jsonArray = JSONArray(jsonDatos)
+            if (jsonArray.length() > 0) {
+                val jsonObject = jsonArray.getJSONObject(0)
+                tvPuntoNombre.text = "${jsonObject.getString("PUNTOCONTROL_NOMBRE")}"
+                tvPuntoUbicacion.text = "Ubicación Local: ${jsonObject.getString("PUNTOCONTROL_UBICACION_LOCAL")}"
+                tvPuntoNumero.text = "Número de Punto: ${jsonObject.getString("PUNTOCONTROL_NUMERO")}"
+                tvMedidaNombre.text = "Unidad de Medida: ${jsonObject.getString("UNIDADMEDIDA_NOMBRE")}"
+                tvClienteNombre.text = "${jsonObject.getString("CLIENTELOCAL_NOMBRECLAVE")}"
+                tvClienteDireccion.text = "Dirección del Cliente: ${jsonObject.getString("CLIENTELOCAL_DIRECCION")}"
+                tvClienteTelefono.text = "Teléfono del Cliente: ${jsonObject.getString("CLIENTELOCAL_TELEFONO")}"
+                tvClienteEmail.text = "Email del Cliente: ${jsonObject.getString("CLIENTELOCAL_EMAIL")}"
+                tvClienteFrecuencia.text = "Frecuencia de Servicio: ${jsonObject.getString("CLIENTELOCAL_FRECUENCIASERVICIO")}"
+                tvClienteRazonSocial.text = "Razón Social del Cliente: ${jsonObject.getString("CLIENTE_RAZONSOCIAL")}"
+                tvClienteRuc.text = "RUC del Cliente: ${jsonObject.getString("CLIENTE_RUC")}"
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
+
+
+
     private fun pedirUbicacion() {
-        // Verificar si los permisos de ubicación están concedidos
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
-            // Solicitar permisos
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_REQUEST_LOCATION)
         } else {
-            // Obtener la ubicación
             obtenerUbicacion()
         }
     }
 
     private fun obtenerUbicacion() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
 
@@ -124,25 +216,20 @@ class PuntoOperarioActivity : AppCompatActivity() {
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
-    companion object {
-        private const val PERMISSION_REQUEST_LOCATION = 1
-    }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_LOCATION) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // Permiso concedido, obtener la ubicación
                 obtenerUbicacion()
             } else {
-                // Permiso denegado, manejar este caso
                 Snackbar.make(findViewById(android.R.id.content), "Permiso de ubicación denegado", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun registrarConsumo() {
-
         val medidaInicial = etMedidaInicial.text.toString().toDoubleOrNull() ?: 0.0
         val medida = etMedida.text.toString().toDoubleOrNull() ?: 0.0
         val observaciones = etObservaciones.text.toString()
@@ -152,6 +239,9 @@ class PuntoOperarioActivity : AppCompatActivity() {
 
         // Obtener valor del CheckBox recambio
         val recambio = checkBoxRecambioPunto.isChecked
+
+        // Obtener usuario_id desde SharedPreferences
+        val usuarioId = SharedPreferencesUtil.getUsuarioId(this)
 
         // Construir el objeto JSON para enviar al servidor
         val jsonObject = JSONObject()
@@ -214,4 +304,15 @@ class PuntoOperarioActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
+

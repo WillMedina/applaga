@@ -6,4 +6,10 @@
         <item>No hubo consumo</item>
         <item>Si hubo consumo</item>
     </string-array>
+
+    <string-array name="hubo_deterioro_options">
+        <item>No hubo deterioro</item>
+        <item>Si hubo deterioro</item>
+    </string-array>
+
 </resources>

@@ -170,7 +170,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Spinner para hubo_consumo -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,34 +180,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Consumo:"
+                            android:text="Deterioro:"
                             android:textSize="16sp"
                             android:layout_marginEnd="8dp" />
 
                         <Spinner
-                            android:id="@+id/spinnerHuboConsumo"
+                            android:id="@+id/etDeterioro"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:entries="@array/hubo_consumo_options" />
+                            android:entries="@array/hubo_deterioro_options" />
                     </LinearLayout>
 
-                    <!-- EditText para medida inicial -->
-                    <EditText
-                        android:id="@+id/etMedidaInicial"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Medida Inicial"
-                        android:inputType="numberDecimal" />
 
-                    <!-- EditText para medida -->
-                    <EditText
-                        android:id="@+id/etMedida"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Medida"
-                        android:inputType="numberDecimal" />
-
-                    <!-- CheckBox para recambio -->
                     <CheckBox
                         android:id="@+id/checkBoxRecambioPunto"
                         android:layout_width="match_parent"
@@ -216,22 +199,102 @@
                         android:text="Recambio del punto"
                         android:layout_marginTop="16dp" />
 
-                    <!-- EditText para observaciones -->
-                    <EditText
-                        android:id="@+id/etObservaciones"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Observaciones"
-                        android:inputType="textMultiLine"
-                        android:minLines="3" />
+                        android:hint="Lepidopteros">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLepidopteros"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Botón para registrar consumo -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Microlepidopteros">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etMicrolepidopteros"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Hemipteros">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etHemipteros"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Coleopteros">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etColeopteros"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Moscas">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etMoscas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mosquitos">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etMosquitos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Otros">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etOtros"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Observaciones">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etObservaciones"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:minLines="3" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
                     <Button
                         android:id="@+id/btnRegistrarConsumo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Registrar Consumo"
-                        android:layout_marginTop="16dp" />
+                        android:text="Registrar Consumo" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

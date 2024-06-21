@@ -116,10 +116,11 @@ class LoginActivity : AppCompatActivity() {
                             val datosObject: JSONObject = jsonResponse.getJSONObject("datos")
                             val tipoCliente = datosObject.getString("TIPO")
 
-                            // Guardar el estado de la sesión
+                            // Guardar el estado de la sesión y el JSON completo
                             with(sharedPreferences.edit()) {
                                 putBoolean("logged_in", true)
                                 putString("tipo_cliente", tipoCliente)
+                                putString("user_data", jsonResponse.toString())
                                 apply()
                             }
 
@@ -156,3 +157,4 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 }
+
