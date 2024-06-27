@@ -3,11 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
 
@@ -37,10 +45,12 @@
         <activity android:name=".OpcionesAdminActivity" />
         <activity android:name=".GestionPuntosAdminActivity" />
 
+        <activity android:name=".NoConexionActivity" />
 
 
 
-        <activity android:name=".OperarioActivity" android:screenOrientation="portrait" />
+        <activity android:name=".OperarioActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".PuntoOperarioActivity" />
         <activity android:name=".PuntoInsectoOperarioActivity" />
 
@@ -49,6 +59,7 @@
         <activity android:name=".ClienteActivity" />
         <activity android:name=".OpcionesClienteActivity" />
         <activity android:name=".ServiciosClienteActivity" />
+        <activity android:name=".HistorialClienteActivity"/>
 
 
     </application>
