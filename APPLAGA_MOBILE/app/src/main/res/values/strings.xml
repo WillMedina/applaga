@@ -3,8 +3,8 @@
 
 <!-- Otras cadenas de texto -->
     <string-array name="hubo_consumo_options">
-        <item>No hubo consumo</item>
-        <item>Si hubo consumo</item>
+        <item>No hubo</item>
+        <item>Si hubo</item>
     </string-array>
 
     <string-array name="hubo_deterioro_options">

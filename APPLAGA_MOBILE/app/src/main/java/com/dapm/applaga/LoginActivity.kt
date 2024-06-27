@@ -89,7 +89,8 @@ class LoginActivity : AppCompatActivity() {
                 Log.e("LoginActivity", "onFailure: ${e.message}", e)
                 runOnUiThread {
                     progressIndicator.visibility = View.GONE
-                    showError("Error de conexión")
+                    val intent = Intent(this@LoginActivity, NoConexionActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
