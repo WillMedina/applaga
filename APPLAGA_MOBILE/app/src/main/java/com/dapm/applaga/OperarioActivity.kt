@@ -3,6 +3,7 @@ package com.dapm.applaga
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
@@ -35,6 +36,7 @@ class OperarioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_operario)
 
         // Configurar la Toolbar
@@ -92,11 +94,13 @@ class OperarioActivity : AppCompatActivity() {
         val integrator = IntentIntegrator(this)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         integrator.setPrompt("Escanea un código QR")
+        integrator.setOrientationLocked(true) // Asegúrate de que esté bloqueado
         integrator.setCameraId(0)
         integrator.setBeepEnabled(true)
         integrator.setBarcodeImageEnabled(true)
         integrator.initiateScan()
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -107,10 +111,13 @@ class OperarioActivity : AppCompatActivity() {
                 val codigoUnico = result.contents
                 verificarCodigoUnico(codigoUnico)
             }
+            // Forzar orientación vertical
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
 
     private fun verificarCodigoUnico(codigoUnico: String) {
         val cookieJar = MyCookieJar(applicationContext)

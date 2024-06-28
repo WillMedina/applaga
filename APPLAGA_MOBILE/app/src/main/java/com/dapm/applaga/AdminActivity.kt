@@ -32,14 +32,6 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
 
-
-
-        val buttonIr: Button = findViewById(R.id.button_ir)
-        buttonIr.setOnClickListener {
-            checkSessionInfo()
-        }
-
-
         // Configurar la Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -207,6 +199,7 @@ class AdminActivity : AppCompatActivity() {
                 e.printStackTrace()
                 runOnUiThread {
                     Snackbar.make(findViewById(android.R.id.content), "Error de conexión. Por favor, verifica tu conexión a internet", Snackbar.LENGTH_SHORT).show()
+
                 }
             }
 

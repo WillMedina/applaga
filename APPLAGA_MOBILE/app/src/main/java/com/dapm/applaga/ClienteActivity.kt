@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.*
@@ -18,16 +20,41 @@ import org.json.JSONObject
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
+
 class ClienteActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var dialog: AlertDialog // Declaración del objeto dialog
     private var isLoggingOut = false
+    private val handler = Handler()
+    private val runnableCode = object : Runnable {
+        override fun run() {
+            Notificaciones()
+            handler.postDelayed(this, 60000) // Consulta cada 60 segundos (ajusta según sea necesario)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.post(runnableCode)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnableCode)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cliente)
+
+        val button: MaterialButton = findViewById(R.id.button)
+        button.setOnClickListener {
+            val intent = Intent(this@ClienteActivity, HistorialClienteActivity::class.java)
+            startActivity(intent)
+        }
 
         // Configurar la Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -70,7 +97,62 @@ class ClienteActivity : AppCompatActivity() {
         }
     }
 
-    private fun actionoservicios() {
+
+
+
+    private fun Notificaciones() {
+            val cookieJar = MyCookieJar(applicationContext)
+            val client = OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build()
+
+            val debugUrl = "https://beta.applaga.net/login/api_notificaciones".toHttpUrlOrNull()
+
+        val requestBuilder = Request.Builder()
+            .url(debugUrl!!)
+
+        val debugRequest = requestBuilder.build()
+
+
+        client.newCall(debugRequest).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    e.printStackTrace()
+                    runOnUiThread {
+                        Snackbar.make(findViewById(android.R.id.content), "Error de conexión", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response.body?.string()
+                    Log.d("ServerResponse", "Response body: $body")
+                    runOnUiThread {
+                        try {
+                            val jsonObject = JSONObject(body)
+                            val resultado = jsonObject.optString("resultado", "0")
+                            val mensaje = jsonObject.optString("mensaje", "")
+
+                            if (resultado == "1") {
+                                val titulo = jsonObject.optString("titulo", "")
+                                val mensajeNotif = jsonObject.optString("mensaje", "")
+
+                                // Aquí puedes manejar la notificación recibida
+                                Snackbar.make(findViewById(android.R.id.content), "$titulo: $mensajeNotif", Snackbar.LENGTH_SHORT).show()
+                            } else {
+                                Snackbar.make(findViewById(android.R.id.content), mensaje, Snackbar.LENGTH_SHORT).show()
+                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                            Snackbar.make(findViewById(android.R.id.content), "Error en el formato de la respuesta", Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
+        }
+
+
+
+
+        private fun actionoservicios() {
         val intent = Intent(this, ServiciosClienteActivity::class.java)
         startActivity(intent)
     }
@@ -111,6 +193,8 @@ class ClienteActivity : AppCompatActivity() {
 
         dialog.show()
     }
+
+
 
 
     private fun logout() {

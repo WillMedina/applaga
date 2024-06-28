@@ -189,7 +189,7 @@
                             android:id="@+id/spinnerHuboConsumo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:entries="@array/hubo_consumo_options" />
+                            android:entries="@array/hubo_deterioro_options" />
                     </LinearLayout>
 
                     <!-- EditText para medida inicial -->
