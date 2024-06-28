@@ -95,6 +95,64 @@ class login implements controlador
         echo json_encode($infosesion);
     }
 
+    public function api_notificaciones()
+    {
+        header('Content-Type: application/json');
+        /*
+          if (!sesion::existe_sesion()) {
+          echo json_encode(
+          [
+          "resultado" => 0,
+          "mensaje" => 'Debe existir una sesion vigente'
+          ]
+          );
+          die();
+          }
+         */
+
+
+        $resultado = [];
+        $datos = json_decode(file_get_contents('php://input'), true);
+
+        $info = sesion::info_sesion_id($datos["usuario"]);
+
+        if ($info["TIPO"] != 'CLIENTE') {
+            $resultado["resultado"] = '0';
+            $resultado["mensaje"] = 'Debe estar logueado un cliente';
+            echo json_encode($resultado);
+            die();
+        }
+
+        /** EXPERIMENTAL --- CAMBIAR LUEGO */
+        $usuario = $info["USUARIO"]; // Nombre de usuario placeholder
+        $random = mt_rand(1, 100); // Genera un número aleatorio entre 1 y 100
+
+        if ($random <= 50) {
+            // 50% de probabilidad
+            $titulo = "No hay notificaciones";
+            $mensaje = "El usuario $usuario no tiene notificaciones.";
+        } elseif ($random <= 75) {
+            // 25% de probabilidad
+            $titulo = "1 notificación";
+            $mensaje = "El usuario ha recibido una notificación.";
+        } else {
+            // 25% de probabilidad restante
+            $cantidadNotificaciones = mt_rand(2, 50); // Genera un número aleatorio entre 2 y 50
+            $titulo = "$cantidadNotificaciones notificaciones";
+            $mensaje = "El usuario $usuario tiene $cantidadNotificaciones notificaciones.";
+        }
+
+        $resultado["resultado"] = '1';
+        $resultadp["timestamp"] = date('Y-m-d h:i:s');
+        $resultado["CLIENTE_CONECTADO"] = $info;
+        $resultado["titulo"] = $titulo;
+        $resultado["mensaje"] = $mensaje;
+        //return ["titulo" => $titulo, "mensaje" => $mensaje];
+        echo json_encode($resultado);
+        die();
+        /*         * ** EXPERIMENTAL --- CAMBIAR LUEGO */
+    }
+
     public function c_login()
     {
         //esto es un link de api : login/c_login
