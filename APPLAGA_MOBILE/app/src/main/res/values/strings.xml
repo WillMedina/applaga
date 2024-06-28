@@ -12,4 +12,7 @@
         <item>Si hubo deterioro</item>
     </string-array>
 
+    <string name="notificaciones_channel_name">Nombre del Canal de Notificaciones</string>
+    <string name="notificaciones_channel_description">Descripción del Canal de Notificaciones</string>
+
 </resources>

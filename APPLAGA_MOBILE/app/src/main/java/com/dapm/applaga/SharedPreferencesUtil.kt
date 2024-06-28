@@ -22,4 +22,9 @@ object SharedPreferencesUtil {
         val userData = getUserData(context)
         return userData?.getJSONObject("datos")?.optInt("USUARIO_ID")
     }
+
+    fun getUsuario(context: Context): String? {
+        val userData = getUserData(context)
+        return userData?.getJSONObject("datos")?.optString("USUARIO")
+    }
 }

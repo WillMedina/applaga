@@ -16,10 +16,16 @@
                 android:title="Servicios"
                 android:checkable="true"/>
             <item
+                android:id="@+id/action_Notificaciones"
+                android:icon="@drawable/icon_notificacion"
+                android:title="Notificaciones"
+                android:checkable="true"/>
+            <item
                 android:id="@+id/action_opciones_cliente"
                 android:icon="@drawable/icon_opciones"
                 android:title="Opciones"
                 android:checkable="true"/>
+
             <item
                 android:id="@+id/action_logout"
                 android:icon="@drawable/icon_logout"

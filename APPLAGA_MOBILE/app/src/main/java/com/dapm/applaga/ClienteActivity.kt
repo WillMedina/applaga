@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import java.util.concurrent.TimeUnit
 
 
 class ClienteActivity : AppCompatActivity() {
@@ -27,30 +29,18 @@ class ClienteActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var dialog: AlertDialog // Declaración del objeto dialog
     private var isLoggingOut = false
-    private val handler = Handler()
-    private val runnableCode = object : Runnable {
-        override fun run() {
-            Notificaciones()
-            handler.postDelayed(this, 60000) // Consulta cada 60 segundos (ajusta según sea necesario)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        handler.post(runnableCode)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnableCode)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cliente)
 
-        val button: MaterialButton = findViewById(R.id.button)
+        val notificationWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(notificationWorkRequest)
+
+
+        val button: MaterialButton = findViewById(R.id.buttonahistorialplaga)
         button.setOnClickListener {
             val intent = Intent(this@ClienteActivity, HistorialClienteActivity::class.java)
             startActivity(intent)
@@ -89,6 +79,10 @@ class ClienteActivity : AppCompatActivity() {
                     actionoservicios()
                     true
                 }
+                R.id.action_Notificaciones -> {
+                    actionnotificaciones()
+                    true
+                }
                 else -> {
                     drawerLayout.close()
                     true
@@ -97,62 +91,19 @@ class ClienteActivity : AppCompatActivity() {
         }
     }
 
+    private fun actionnotificaciones() {
+
+        val intent = Intent(this, NotificationDetailActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun startNotificationsService() {
+        val serviceIntent = Intent(this, NotificationWorker::class.java)
+        startService(serviceIntent)
+    }
 
 
-
-    private fun Notificaciones() {
-            val cookieJar = MyCookieJar(applicationContext)
-            val client = OkHttpClient.Builder()
-                .cookieJar(cookieJar)
-                .build()
-
-            val debugUrl = "https://beta.applaga.net/login/api_notificaciones".toHttpUrlOrNull()
-
-        val requestBuilder = Request.Builder()
-            .url(debugUrl!!)
-
-        val debugRequest = requestBuilder.build()
-
-
-        client.newCall(debugRequest).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    e.printStackTrace()
-                    runOnUiThread {
-                        Snackbar.make(findViewById(android.R.id.content), "Error de conexión", Snackbar.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string()
-                    Log.d("ServerResponse", "Response body: $body")
-                    runOnUiThread {
-                        try {
-                            val jsonObject = JSONObject(body)
-                            val resultado = jsonObject.optString("resultado", "0")
-                            val mensaje = jsonObject.optString("mensaje", "")
-
-                            if (resultado == "1") {
-                                val titulo = jsonObject.optString("titulo", "")
-                                val mensajeNotif = jsonObject.optString("mensaje", "")
-
-                                // Aquí puedes manejar la notificación recibida
-                                Snackbar.make(findViewById(android.R.id.content), "$titulo: $mensajeNotif", Snackbar.LENGTH_SHORT).show()
-                            } else {
-                                Snackbar.make(findViewById(android.R.id.content), mensaje, Snackbar.LENGTH_SHORT).show()
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                            Snackbar.make(findViewById(android.R.id.content), "Error en el formato de la respuesta", Snackbar.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            })
-        }
-
-
-
-
-        private fun actionoservicios() {
+    private fun actionoservicios() {
         val intent = Intent(this, ServiciosClienteActivity::class.java)
         startActivity(intent)
     }
@@ -193,8 +144,6 @@ class ClienteActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-
 
 
     private fun logout() {
