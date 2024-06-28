@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -27,7 +28,8 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
     private lateinit var tvPuntoNombre: TextView
     private lateinit var tvPuntoUbicacion: TextView
     private lateinit var tvPuntoNumero: TextView
-    private lateinit var etDeterioro: Spinner
+
+    private lateinit var spinnerHuboDeterioro: Spinner
 
     private lateinit var tvClienteNombre: TextView
     private lateinit var tvClienteDireccion: TextView
@@ -136,7 +138,6 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
         cardViewDetallePunto = findViewById(R.id.cardViewDetallePunto)
         cardViewCapturaDatos = findViewById(R.id.cardViewCapturaDatos)
         btnRegistrarConsumo = findViewById(R.id.btnRegistrarConsumo)
-        etDeterioro = findViewById(R.id.etDeterioro)
         etLepidopteros = findViewById(R.id.etLepidopteros)
         etMicrolepidopteros = findViewById(R.id.etMicrolepidopteros)
         etHemipteros = findViewById(R.id.etHemipteros)
@@ -146,29 +147,30 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
         etOtros = findViewById(R.id.etOtros)
         etObservaciones = findViewById(R.id.etObservaciones)
 
+        spinnerHuboDeterioro = findViewById(R.id.spinnerHuboDeterioro)
+
         toggleButtonGroup = findViewById(R.id.toggleButtonGroup)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     private fun setupToggleButtonGroup() {
         toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            when (checkedId) {
-                R.id.buttonDetallePunto -> {
-                    if (isChecked) {
-                        cardViewDetallePunto.visibility = android.view.View.VISIBLE
-                        cardViewCapturaDatos.visibility = android.view.View.GONE
-                    }
-                }
-                R.id.buttonCapturaDatos -> {
-                    if (isChecked) {
-                        cardViewDetallePunto.visibility = android.view.View.GONE
-                        cardViewCapturaDatos.visibility = android.view.View.VISIBLE
-                    }
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.buttonDetallePunto -> showCardView(cardViewDetallePunto)
+                    R.id.buttonCapturaDatos -> showCardView(cardViewCapturaDatos)
                 }
             }
         }
         toggleButtonGroup.check(R.id.buttonDetallePunto)
     }
+
+    private fun showCardView(cardView: CardView) {
+        cardViewDetallePunto.visibility = if (cardView == cardViewDetallePunto) View.VISIBLE else View.GONE
+        cardViewCapturaDatos.visibility = if (cardView == cardViewCapturaDatos) View.VISIBLE else View.GONE
+    }
+
+
 
     private fun loadDataFromIntent() {
         val jsonDatos = intent.getStringExtra("jsonDatos")
@@ -247,7 +249,7 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
         val moscas = etMoscas.text.toString().toIntOrNull() ?: 0
         val mosquitos = etMosquitos.text.toString().toIntOrNull() ?: 0
         val otros = etOtros.text.toString().toIntOrNull() ?: 0
-        val deterioro = etDeterioro.selectedItemPosition == 0
+        val deterioro = spinnerHuboDeterioro.selectedItemPosition == 0
 
         // Obtener otros valores necesarios
         val observaciones = etObservaciones.text.toString()
@@ -269,7 +271,8 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
         jsonObject.put("lat", latitud)
         jsonObject.put("long", longitud)
         jsonObject.put("observaciones", observaciones)
-        jsonObject.put("hubo_deterioro", deterioro)
+        jsonObject.put("deterioro", deterioro)
+
 
 
         val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
@@ -307,6 +310,7 @@ class PuntoInsectoOperarioActivity : AppCompatActivity() {
                         if (resultado) {
                             // Éxito en el registro
                             Snackbar.make(findViewById(android.R.id.content), mensaje, Snackbar.LENGTH_SHORT).show()
+
                             // Manejar cualquier otra lógica de éxito aquí
                         } else {
                             // Error en el registro

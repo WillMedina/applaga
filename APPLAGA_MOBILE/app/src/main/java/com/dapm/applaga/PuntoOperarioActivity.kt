@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -142,23 +143,21 @@ class PuntoOperarioActivity : AppCompatActivity() {
 
     private fun setupToggleButtonGroup() {
         toggleButtonGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            when (checkedId) {
-                R.id.buttonDetallePunto -> {
-                    if (isChecked) {
-                        cardViewDetallePunto.visibility = android.view.View.VISIBLE
-                        cardViewCapturaDatos.visibility = android.view.View.GONE
-                    }
-                }
-                R.id.buttonCapturaDatos -> {
-                    if (isChecked) {
-                        cardViewDetallePunto.visibility = android.view.View.GONE
-                        cardViewCapturaDatos.visibility = android.view.View.VISIBLE
-                    }
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.buttonDetallePunto -> showCardView(cardViewDetallePunto)
+                    R.id.buttonCapturaDatos -> showCardView(cardViewCapturaDatos)
                 }
             }
         }
         toggleButtonGroup.check(R.id.buttonDetallePunto)
     }
+
+    private fun showCardView(cardView: CardView) {
+        cardViewDetallePunto.visibility = if (cardView == cardViewDetallePunto) View.VISIBLE else View.GONE
+        cardViewCapturaDatos.visibility = if (cardView == cardViewCapturaDatos) View.VISIBLE else View.GONE
+    }
+
     private fun loadDataFromIntent() {
         val jsonDatos = intent.getStringExtra("jsonDatos")
         if (jsonDatos != null) {
