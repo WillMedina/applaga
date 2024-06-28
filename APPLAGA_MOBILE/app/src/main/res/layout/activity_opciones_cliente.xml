@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:text="General"/>
 
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/switch1"
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchnotificacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notificaciones por voz para el cliente" />

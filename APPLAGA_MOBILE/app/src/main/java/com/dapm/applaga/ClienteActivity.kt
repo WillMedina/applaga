@@ -97,10 +97,6 @@ class ClienteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun startNotificationsService() {
-        val serviceIntent = Intent(this, NotificationWorker::class.java)
-        startService(serviceIntent)
-    }
 
 
     private fun actionoservicios() {
